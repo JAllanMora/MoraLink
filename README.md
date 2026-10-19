@@ -1,5 +1,7 @@
 # MoraLink
 
+Producción: <https://moralink.app>
+
 Programas de lealtad y catálogo digital para negocios (restaurantes, cafeterías, tiendas), con la marca de cada negocio y en su propio enlace: `https://moralink.app/<negocio>`.
 
 Todo corre en **un solo proyecto de Supabase y un solo proyecto de Vercel**: los negocios son filas de la tabla `tenants`, y cada menú, recompensa y cliente final lleva el `tenant_id` del negocio al que pertenece.
