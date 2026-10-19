@@ -12,6 +12,15 @@
   --radius-brand: var(--brand-radius);
   --font-sans: var(--font-inter);
   --font-display: var(--brand-font-display, var(--font-inter));
+  --font-serif: var(--font-fraunces);
+  --font-script: var(--font-caveat);
+
+  /* Identidad de MoraLink (landing) */
+  --color-cream: #fbf3e4;
+  --color-cream-dark: #f3e6cc;
+  --color-forest: #1f3b2d;
+  --color-tomato: #c0272d;
+  --color-basil: #1f7a45;
 }
 
 body {
