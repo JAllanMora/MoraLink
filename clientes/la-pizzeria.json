@@ -1,0 +1,95 @@
+{
+  "slug": "la-pizzeria",
+  "name": "La Pizzería",
+  "tagline": "Pizza al horno de leña, hecha con cariño",
+  "logo_url": null,
+  "cover_url": null,
+  "whatsapp": "+525517327009",
+  "instagram": null,
+  "address": null,
+  "theme": {
+    "primary": "#C0272D",
+    "primaryForeground": "#FFFFFF",
+    "background": "#FBF3E4",
+    "surface": "#FFFFFF",
+    "foreground": "#1F3B2D",
+    "muted": "#6B5E4F",
+    "accent": "#2E7D4F",
+    "fontDisplay": "fraunces",
+    "radius": "1rem"
+  },
+  "program": {
+    "type": "stamps",
+    "name": "Tarjeta pizzera",
+    "description": "Junta 5 sellos y llévate una pizza individual gratis.",
+    "stamps_required": 5,
+    "stamp_icon": "pizza"
+  },
+  "rewards": [
+    {
+      "name": "Pizza individual gratis",
+      "description": "Cualquier pizza individual del menú.",
+      "cost": 5
+    },
+    {
+      "name": "Complemento gratis",
+      "description": "Alitas, papas o pan de ajo.",
+      "cost": 3
+    }
+  ],
+  "catalog": [
+    {
+      "category": "Pizzas",
+      "image_url": null,
+      "products": [
+        {
+          "name": "Pepperoni",
+          "description": "Salsa de tomate, mozzarella y pepperoni.",
+          "price": 189
+        },
+        {
+          "name": "Margarita",
+          "description": "Tomate, mozzarella fresca y albahaca.",
+          "price": 169
+        },
+        {
+          "name": "Cuatro quesos",
+          "description": "Mozzarella, gouda, parmesano y gorgonzola.",
+          "price": 209
+        }
+      ]
+    },
+    {
+      "category": "Complementos",
+      "image_url": null,
+      "products": [
+        {
+          "name": "Alitas BBQ",
+          "description": "8 piezas con aderezo ranch.",
+          "price": 149
+        },
+        {
+          "name": "Pan de ajo",
+          "description": "Con mantequilla de ajo y perejil.",
+          "price": 79
+        }
+      ]
+    },
+    {
+      "category": "Bebidas",
+      "image_url": null,
+      "products": [
+        {
+          "name": "Refresco",
+          "description": "355 ml.",
+          "price": 35
+        },
+        {
+          "name": "Cerveza artesanal",
+          "description": "Pregunta por la de temporada.",
+          "price": 75
+        }
+      ]
+    }
+  ]
+}
