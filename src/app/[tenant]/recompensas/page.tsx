@@ -5,7 +5,7 @@ import { pluralize } from "@/lib/format";
 import { getCurrentCard } from "@/lib/tenant/customer";
 import { getTenantSite, type TenantSite } from "@/lib/tenant/queries";
 
-export default function RewardsPage({ params }: PageProps<"/s/[tenant]/recompensas">) {
+export default function RewardsPage({ params }: PageProps<"/[tenant]/recompensas">) {
   return (
     <Suspense>
       <Rewards params={params} />
@@ -13,7 +13,7 @@ export default function RewardsPage({ params }: PageProps<"/s/[tenant]/recompens
   );
 }
 
-async function Rewards({ params }: { params: PageProps<"/s/[tenant]/recompensas">["params"] }) {
+async function Rewards({ params }: { params: PageProps<"/[tenant]/recompensas">["params"] }) {
   const site = await getTenantSite((await params).tenant);
   if (!site) notFound();
 

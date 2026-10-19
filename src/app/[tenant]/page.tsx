@@ -6,7 +6,7 @@ import { StampIcon } from "@/components/stamp-icon";
 import { getTenantSite } from "@/lib/tenant/queries";
 import { ProgressCard, ProgressCardSkeleton } from "./_components/progress-card";
 
-export default function TenantHome({ params }: PageProps<"/s/[tenant]">) {
+export default function TenantHome({ params }: PageProps<"/[tenant]">) {
   return (
     <Suspense fallback={<ProgressCardSkeleton />}>
       <Home params={params} />
@@ -14,7 +14,7 @@ export default function TenantHome({ params }: PageProps<"/s/[tenant]">) {
   );
 }
 
-async function Home({ params }: { params: PageProps<"/s/[tenant]">["params"] }) {
+async function Home({ params }: { params: PageProps<"/[tenant]">["params"] }) {
   const site = await getTenantSite((await params).tenant);
   if (!site) notFound();
   // La recompensa principal: la más alta del programa
@@ -42,8 +42,8 @@ async function Home({ params }: { params: PageProps<"/s/[tenant]">["params"] }) 
       )}
 
       <div className="space-y-3">
-        <ButtonLink href="/recompensas">Ver mis recompensas</ButtonLink>
-        <ButtonLink href="/menu" variant="outline">
+        <ButtonLink href={`/${site.slug}/recompensas`}>Ver mis recompensas</ButtonLink>
+        <ButtonLink href={`/${site.slug}/menu`} variant="outline">
           Conocer el menú
         </ButtonLink>
       </div>
@@ -51,7 +51,7 @@ async function Home({ params }: { params: PageProps<"/s/[tenant]">["params"] }) 
       {site.menu.length > 0 && (
         <section className="grid grid-cols-3 gap-3">
           {site.menu.map((category) => (
-            <Link key={category.id} href={`/menu#${category.id}`} className="text-center">
+            <Link key={category.id} href={`/${site.slug}/menu#${category.id}`} className="text-center">
               <span
                 className="flex aspect-square items-center justify-center rounded-brand bg-brand-surface bg-cover bg-center font-display text-2xl font-bold text-brand shadow-sm"
                 style={category.image_url ? { backgroundImage: `url(${category.image_url})` } : undefined}

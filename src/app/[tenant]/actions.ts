@@ -1,8 +1,8 @@
 "use server";
 
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { refresh } from "next/cache";
+import { requestOrigin } from "@/lib/origin";
 import { createClient } from "@/lib/supabase/server";
 import { getTenantSite } from "@/lib/tenant/queries";
 
@@ -14,14 +14,6 @@ async function requireTenant(slug: string) {
   return site;
 }
 
-// URL pública del subdominio actual (no la ruta interna /s/<slug>)
-async function publicOrigin() {
-  const h = await headers();
-  const host = h.get("x-forwarded-host") ?? h.get("host");
-  const proto = h.get("x-forwarded-proto") ?? (host?.includes("localhost") ? "http" : "https");
-  return `${proto}://${host}`;
-}
-
 export async function requestLogin(slug: string, _prev: FormState, formData: FormData): Promise<FormState> {
   await requireTenant(slug);
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
@@ -30,16 +22,16 @@ export async function requestLogin(slug: string, _prev: FormState, formData: For
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo: `${await publicOrigin()}/auth/callback?next=/mi-tarjeta` },
+    options: { emailRedirectTo: `${await requestOrigin()}/${slug}/auth/callback?next=/${slug}/mi-tarjeta` },
   });
   if (error) return { ok: false, message: "No pudimos enviar el correo. Intenta de nuevo en un momento." };
   return { ok: true, message: `Te enviamos un enlace a ${email}. Ábrelo desde este mismo teléfono.` };
 }
 
-export async function signOut() {
+export async function signOut(slug: string) {
   const supabase = await createClient();
   await supabase.auth.signOut();
-  redirect("/");
+  redirect(`/${slug}`);
 }
 
 // Crea la tarjeta del cliente en este negocio si aún no la tiene
@@ -47,11 +39,11 @@ export async function joinProgram(slug: string) {
   const site = await requireTenant(slug);
   const supabase = await createClient();
   const { data: claims } = await supabase.auth.getClaims();
-  if (!claims) redirect("/entrar");
+  if (!claims) redirect(`/${slug}/entrar`);
 
   const { error } = await supabase.from("customers").insert({ tenant_id: site.id });
   if (error && error.code !== "23505") throw new Error("No pudimos crear tu tarjeta");
-  redirect("/mi-tarjeta");
+  redirect(`/${slug}/mi-tarjeta`);
 }
 
 const RPC_ERRORS: Record<string, string> = {

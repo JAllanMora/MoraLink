@@ -4,11 +4,11 @@ import QRCode from "qrcode";
 import { Button } from "@/components/button";
 import { pluralize } from "@/lib/format";
 import { getCurrentCard } from "@/lib/tenant/customer";
-import { tenantUrl } from "@/lib/tenant/host";
+import { requestOrigin } from "@/lib/origin";
 import { getTenantSite } from "@/lib/tenant/queries";
 import { joinProgram, signOut } from "../actions";
 
-export default function CardPage({ params }: PageProps<"/s/[tenant]/mi-tarjeta">) {
+export default function CardPage({ params }: PageProps<"/[tenant]/mi-tarjeta">) {
   return (
     <Suspense fallback={<div className="h-96 animate-pulse rounded-brand bg-brand-surface" />}>
       <Card params={params} />
@@ -16,12 +16,12 @@ export default function CardPage({ params }: PageProps<"/s/[tenant]/mi-tarjeta">
   );
 }
 
-async function Card({ params }: { params: PageProps<"/s/[tenant]/mi-tarjeta">["params"] }) {
+async function Card({ params }: { params: PageProps<"/[tenant]/mi-tarjeta">["params"] }) {
   const site = await getTenantSite((await params).tenant);
   if (!site) notFound();
 
   const current = await getCurrentCard(site.id);
-  if (!current) redirect("/entrar");
+  if (!current) redirect(`/${site.slug}/entrar`);
 
   if (!current.card) {
     return (
@@ -36,7 +36,7 @@ async function Card({ params }: { params: PageProps<"/s/[tenant]/mi-tarjeta">["p
   const { card } = current;
   const [one, many] = site.program?.type === "points" ? ["punto", "puntos"] : ["sello", "sellos"];
   // El QR abre la caja del negocio con el código ya escrito
-  const qr = await QRCode.toString(tenantUrl(site.slug, `/caja?codigo=${card.code}`), {
+  const qr = await QRCode.toString(`${await requestOrigin()}/${site.slug}/caja?codigo=${card.code}`, {
     type: "svg",
     margin: 1,
     color: { dark: site.theme.foreground, light: "#0000" },
@@ -53,7 +53,7 @@ async function Card({ params }: { params: PageProps<"/s/[tenant]/mi-tarjeta">["p
       <p className="rounded-brand bg-brand p-4 font-semibold text-brand-foreground">
         Tienes {pluralize(card.balance, one, many)}
       </p>
-      <form action={signOut}>
+      <form action={signOut.bind(null, site.slug)}>
         <button className="text-sm text-brand-muted underline">Cerrar sesión ({current.email})</button>
       </form>
     </div>

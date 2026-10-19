@@ -3,7 +3,7 @@ import { Button } from "@/components/button";
 import { requestLogin } from "../actions";
 import { ActionForm } from "../_components/action-form";
 
-export default function LoginPage({ params }: PageProps<"/s/[tenant]/entrar">) {
+export default function LoginPage({ params }: PageProps<"/[tenant]/entrar">) {
   return (
     <div className="space-y-4">
       <h1 className="font-display text-3xl font-bold">Únete al programa</h1>

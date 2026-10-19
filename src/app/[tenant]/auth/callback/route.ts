@@ -4,11 +4,11 @@ import { getTenantSite } from "@/lib/tenant/queries";
 
 // Destino del enlace de acceso que llega por correo. Abre la sesión y,
 // si es la primera vez, crea la tarjeta del cliente en este negocio.
-export async function GET(request: NextRequest, { params }: RouteContext<"/s/[tenant]/auth/callback">) {
+export async function GET(request: NextRequest, { params }: RouteContext<"/[tenant]/auth/callback">) {
   const { tenant } = await params;
   const code = request.nextUrl.searchParams.get("code");
-  const next = safePath(request.nextUrl.searchParams.get("next"));
-  const origin = publicOrigin(request);
+  const next = safePath(request.nextUrl.searchParams.get("next"), `/${tenant}`);
+  const origin = request.nextUrl.origin;
 
   if (code) {
     const supabase = await createClient();
@@ -21,15 +21,10 @@ export async function GET(request: NextRequest, { params }: RouteContext<"/s/[te
     }
   }
 
-  return NextResponse.redirect(`${origin}/entrar?error=enlace`);
+  return NextResponse.redirect(`${origin}/${tenant}/entrar?error=enlace`);
 }
 
-function safePath(path: string | null) {
-  return path && path.startsWith("/") && !path.startsWith("//") ? path : "/";
+function safePath(path: string | null, fallback: string) {
+  return path && path.startsWith("/") && !path.startsWith("//") ? path : fallback;
 }
 
-function publicOrigin(request: NextRequest) {
-  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
-  const proto = request.headers.get("x-forwarded-proto") ?? request.nextUrl.protocol.replace(":", "");
-  return `${proto}://${host}`;
-}

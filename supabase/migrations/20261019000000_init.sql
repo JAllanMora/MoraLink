@@ -1,5 +1,5 @@
 -- MoraLink: esquema base multi-cliente (multi-tenant).
--- Cada negocio es un "tenant" identificado por su slug (<slug>.moralink.app).
+-- Cada negocio es un "tenant" identificado por su slug (moralink.app/<slug>).
 -- Todo dato de negocio lleva tenant_id y se protege con RLS.
 
 create extension if not exists pgcrypto;
@@ -10,7 +10,10 @@ create extension if not exists pgcrypto;
 
 create table public.tenants (
   id uuid primary key default gen_random_uuid(),
-  slug text not null unique check (slug ~ '^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$'),
+  slug text not null unique
+    check (slug ~ '^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$')
+    -- Rutas de la propia app que no pueden ser nombre de negocio
+    check (slug not in ('api', 'admin', 'app', 'auth', 'login', 'www')),
   name text not null,
   tagline text,
   logo_url text,

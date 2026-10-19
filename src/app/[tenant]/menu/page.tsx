@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { formatPrice } from "@/lib/format";
 import { getTenantSite } from "@/lib/tenant/queries";
 
-export default function MenuPage({ params }: PageProps<"/s/[tenant]/menu">) {
+export default function MenuPage({ params }: PageProps<"/[tenant]/menu">) {
   return (
     <Suspense>
       <Menu params={params} />
@@ -11,7 +11,7 @@ export default function MenuPage({ params }: PageProps<"/s/[tenant]/menu">) {
   );
 }
 
-async function Menu({ params }: { params: PageProps<"/s/[tenant]/menu">["params"] }) {
+async function Menu({ params }: { params: PageProps<"/[tenant]/menu">["params"] }) {
   const site = await getTenantSite((await params).tenant);
   if (!site) notFound();
 

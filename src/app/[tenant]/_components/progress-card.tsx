@@ -26,7 +26,7 @@ export async function ProgressCard({ site }: { site: TenantSite }) {
             </form>
           ) : (
             <Link
-              href="/entrar"
+              href={`/${site.slug}/entrar`}
               className="flex w-full justify-center rounded-brand bg-brand-surface px-4 py-3 font-semibold text-brand"
             >
               Únete gratis
@@ -68,7 +68,7 @@ export async function ProgressCard({ site }: { site: TenantSite }) {
       </p>
 
       <Link
-        href="/mi-tarjeta"
+        href={`/${site.slug}/mi-tarjeta`}
         className="mt-4 flex w-full justify-center rounded-brand border-2 border-brand-foreground px-4 py-3 font-semibold"
       >
         Mostrar mi código

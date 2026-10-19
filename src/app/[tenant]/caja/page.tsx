@@ -7,7 +7,7 @@ import { addLoyalty, redeemReward } from "../actions";
 import { ActionForm } from "../_components/action-form";
 
 // Panel del personal: sumar sellos/puntos y canjear recompensas por código.
-export default function StaffPage({ params, searchParams }: PageProps<"/s/[tenant]/caja">) {
+export default function StaffPage({ params, searchParams }: PageProps<"/[tenant]/caja">) {
   return (
     <Suspense fallback={<div className="h-96 animate-pulse rounded-brand bg-brand-surface" />}>
       <Staff params={params} searchParams={searchParams} />
@@ -18,7 +18,7 @@ export default function StaffPage({ params, searchParams }: PageProps<"/s/[tenan
 async function Staff({
   params,
   searchParams,
-}: Pick<PageProps<"/s/[tenant]/caja">, "params" | "searchParams">) {
+}: Pick<PageProps<"/[tenant]/caja">, "params" | "searchParams">) {
   const site = await getTenantSite((await params).tenant);
   if (!site) notFound();
 
@@ -27,7 +27,7 @@ async function Staff({
       <div className="space-y-4 text-center">
         <h1 className="font-display text-3xl font-bold">Caja</h1>
         <p className="text-brand-muted">Entra con la cuenta del negocio para registrar visitas.</p>
-        <ButtonLink href="/entrar">Entrar</ButtonLink>
+        <ButtonLink href={`/${site.slug}/entrar`}>Entrar</ButtonLink>
       </div>
     );
   }

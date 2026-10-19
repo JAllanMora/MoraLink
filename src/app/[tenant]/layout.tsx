@@ -6,13 +6,13 @@ import { Suspense } from "react";
 import { getTenantSite } from "@/lib/tenant/queries";
 import { themeStyle } from "@/lib/tenant/theme";
 
-export async function generateMetadata({ params }: LayoutProps<"/s/[tenant]">): Promise<Metadata> {
+export async function generateMetadata({ params }: LayoutProps<"/[tenant]">): Promise<Metadata> {
   const site = await getTenantSite((await params).tenant);
   if (!site) return {};
   return { title: site.name, description: site.program?.description ?? site.tagline ?? undefined };
 }
 
-export default function TenantLayout({ children, params }: LayoutProps<"/s/[tenant]">) {
+export default function TenantLayout({ children, params }: LayoutProps<"/[tenant]">) {
   return (
     <Suspense fallback={<div className="min-h-screen" />}>
       <TenantFrame params={params}>{children}</TenantFrame>
@@ -24,7 +24,7 @@ async function TenantFrame({
   params,
   children,
 }: {
-  params: LayoutProps<"/s/[tenant]">["params"];
+  params: LayoutProps<"/[tenant]">["params"];
   children: React.ReactNode;
 }) {
   const site = await getTenantSite((await params).tenant);
@@ -34,7 +34,7 @@ async function TenantFrame({
     <div style={themeStyle(site.theme)} className="min-h-screen bg-brand-background text-brand-ink">
       <div className="mx-auto flex min-h-screen max-w-md flex-col">
         <header className="flex items-center justify-between px-5 py-4">
-          <Link href="/" className="flex items-center gap-3">
+          <Link href={`/${site.slug}`} className="flex items-center gap-3">
             {site.logo_url ? (
               <Image src={site.logo_url} alt="" width={40} height={40} className="size-10 rounded-full object-cover" />
             ) : (
@@ -44,7 +44,7 @@ async function TenantFrame({
             )}
             <span className="font-display text-xl font-bold">{site.name}</span>
           </Link>
-          <Link href="/mi-tarjeta" className="text-sm font-semibold text-brand">
+          <Link href={`/${site.slug}/mi-tarjeta`} className="text-sm font-semibold text-brand">
             Mi tarjeta
           </Link>
         </header>
