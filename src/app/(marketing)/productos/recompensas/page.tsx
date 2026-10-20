@@ -44,7 +44,7 @@ export default function RewardsProduct() {
         highlight="merecen recompensas"
         intro="Una tarjeta de lealtad digital con tu marca, para cualquier tipo de negocio. Sin apps, sin tarjetas de cartón que se pierden y sin complicaciones para tu personal."
         message="Hola, me interesa el programa de recompensas de MoraLink"
-        demo={{ href: DEMO_URL, label: "Ver un ejemplo" }}
+        demo={DEMO_URL ? { href: DEMO_URL, label: "Ver un ejemplo" } : undefined}
         visual={<PhoneMockup />}
       />
 

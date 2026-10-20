@@ -25,8 +25,8 @@ Cada negocio paga una mensualidad y recibe:
 
 ```
 moralink.app                   landing de MoraLink
-moralink.app/la-pizzeria       inicio del negocio
-moralink.app/la-pizzeria/menu  su menú
+moralink.app/la-dolce-vita       inicio del negocio
+moralink.app/la-dolce-vita/menu  su menú
 ```
 
 - `src/app/[tenant]/` es el sitio de cada negocio; el primer segmento de la ruta es su `slug`.
@@ -66,18 +66,18 @@ Requiere Node 22 y Docker.
 npm install
 npx supabase start            # Postgres, Auth y Mailpit locales
 cp .env.example .env.local    # pega las llaves que imprime `npx supabase status`
-npm run cliente:cargar -- clientes/la-pizzeria.json --duenio tu@correo.com
+npm run cliente:cargar -- clientes/<slug>.json --duenio tu@correo.com
 npm run dev
 ```
 
-- Abre <http://localhost:3000/la-pizzeria>.
+- Abre <http://localhost:3000/<slug>>.
 - Los correos de acceso llegan a Mailpit: <http://127.0.0.1:54324>.
-- Entra con el correo del dueño y ve a `/la-pizzeria/caja` para sumar sellos.
+- Entra con el correo del dueño y ve a `/<slug>/caja` para sumar sellos.
 - Tras cambiar el esquema: `npx supabase migration new <nombre>`, `npx supabase db reset` y `npm run db:types`.
 
 ## Dar de alta un negocio
 
-1. Copia `clientes/la-pizzeria.json` a `clientes/<slug>.json` y llénalo con la marca del negocio. El `slug` será su ruta (`moralink.app/<slug>`).
+1. Copia `clientes/plantilla.json` a `clientes/<slug>.json` y llénalo con la marca del negocio. El `slug` será su ruta (`moralink.app/<slug>`).
 2. Sube su logo y fotos a Supabase Storage (bucket público) y pega las URLs.
 3. Ejecuta con las llaves de producción:
    ```bash

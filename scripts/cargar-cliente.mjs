@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // Carga o actualiza un negocio a partir de su archivo en clientes/<slug>.json.
 //
-//   npm run cliente:cargar -- clientes/la-pizzeria.json
-//   npm run cliente:cargar -- clientes/la-pizzeria.json --duenio correo@negocio.com
+//   npm run cliente:cargar -- clientes/la-dolce-vita.json
+//   npm run cliente:cargar -- clientes/la-dolce-vita.json --duenio correo@negocio.com
 //
 // Es idempotente: se puede correr cada vez que el negocio cambie su marca,
 // menú o recompensas. Productos, categorías y recompensas se identifican por

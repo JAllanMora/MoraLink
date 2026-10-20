@@ -37,7 +37,7 @@ export default function CatalogProduct() {
         highlight="siempre a la mano"
         intro="Tu menú, tus productos o tus servicios con fotos y precios en un solo enlace. Tus clientes lo abren desde su celular y saben qué pedir antes de llegar."
         message="Hola, me interesa el catálogo de productos de MoraLink"
-        demo={{ href: `${DEMO_URL}/menu`, label: "Ver un ejemplo" }}
+        demo={DEMO_URL ? { href: `${DEMO_URL}/menu`, label: "Ver un ejemplo" } : undefined}
         visual={<CatalogMockup />}
       />
 

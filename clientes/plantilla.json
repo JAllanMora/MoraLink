@@ -1,0 +1,52 @@
+{
+  "slug": "nombre-del-negocio",
+  "name": "Nombre del negocio",
+  "tagline": "Frase corta del negocio",
+  "logo_url": null,
+  "cover_url": null,
+  "whatsapp": "+520000000000",
+  "instagram": null,
+  "address": null,
+  "orders": {
+    "enabled": true,
+    "delivery": false
+  },
+  "theme": {
+    "primary": "#6B3FB5",
+    "primaryForeground": "#FFFFFF",
+    "background": "#F8F4FD",
+    "surface": "#FFFFFF",
+    "foreground": "#2A1846",
+    "muted": "#6B5E7F",
+    "accent": "#1F7A45",
+    "fontDisplay": "fraunces",
+    "radius": "1rem"
+  },
+  "program": {
+    "type": "stamps",
+    "name": "Tarjeta de lealtad",
+    "description": "Junta 8 sellos y llévate un regalo.",
+    "stamps_required": 8,
+    "stamp_icon": "star"
+  },
+  "rewards": [
+    {
+      "name": "Regalo de la casa",
+      "description": "Qué se lleva el cliente al completar su tarjeta.",
+      "cost": 8
+    }
+  ],
+  "catalog": [
+    {
+      "category": "Categoría",
+      "image_url": null,
+      "products": [
+        {
+          "name": "Producto",
+          "description": "Descripción corta.",
+          "price": 100
+        }
+      ]
+    }
+  ]
+}

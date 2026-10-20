@@ -5,7 +5,8 @@ export const WHATSAPP = (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? "+52 55 173
 export const whatsappUrl = (text: string) =>
   `https://wa.me/${WHATSAPP.replace(/\D/g, "")}?text=${encodeURIComponent(text)}`;
 
-export const DEMO_URL = "/la-pizzeria";
+// Negocio que se muestra como ejemplo en las páginas de producto (null = sin ejemplo)
+export const DEMO_URL: string | null = null;
 
 export const PRODUCTS: { href: string; icon: IconName; title: string; summary: string }[] = [
   {
