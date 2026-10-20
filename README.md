@@ -88,7 +88,7 @@ npm run dev
 
 Para recibir pedidos en línea agrega `"orders": { "enabled": true, "delivery": true }` al JSON (`delivery` permite envío a domicilio además de recoger en tienda).
 
-Campos del tema (`theme`): `primary`, `primaryForeground`, `background`, `surface`, `foreground`, `muted`, `accent`, `radius` y `fontDisplay` (`fraunces`, `playfair`, `poppins` o `inter`). Íconos de sello (`stamp_icon`): `pizza`, `coffee`, `burger`, `heart`, `star`.
+Campos del tema (`theme`): `primary`, `primaryForeground`, `background`, `surface`, `foreground`, `muted`, `accent`, `radius` y `fontDisplay` (`fraunces`, `playfair`, `poppins` o `inter`). Íconos de sello (`stamp_icon`): `pizza`, `coffee`, `burger`, `cookie`, `heart`, `star`.
 
 ## Despliegue
 

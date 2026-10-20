@@ -1,0 +1,53 @@
+{
+  "slug": "la-dolce-vita",
+  "name": "La Dolce Vita",
+  "tagline": "Galletas gigantes hechas a mano",
+  "logo_url": null,
+  "cover_url": "/clientes/la-dolce-vita/portada.jpg",
+  "whatsapp": null,
+  "instagram": null,
+  "address": null,
+  "orders": {
+    "enabled": true,
+    "delivery": true
+  },
+  "theme": {
+    "primary": "#C8436B",
+    "primaryForeground": "#FFFFFF",
+    "background": "#FFF1EE",
+    "surface": "#FFFFFF",
+    "foreground": "#4A2A26",
+    "muted": "#8C6660",
+    "accent": "#B5612A",
+    "fontDisplay": "playfair",
+    "radius": "1.5rem"
+  },
+  "program": {
+    "type": "stamps",
+    "name": "Club Dolce Vita",
+    "description": "Junta 8 sellos y llévate una galleta gratis.",
+    "stamps_required": 8,
+    "stamp_icon": "cookie"
+  },
+  "rewards": [
+    {
+      "name": "Galleta gratis",
+      "description": "La que tú elijas.",
+      "cost": 8
+    }
+  ],
+  "catalog": [
+    {
+      "category": "Galletas",
+      "image_url": "/clientes/la-dolce-vita/birthday-cookie.jpg",
+      "products": [
+        {
+          "name": "Birthday Cookie",
+          "description": "Masa de vainilla con chispas de colores.",
+          "price": null,
+          "image_url": "/clientes/la-dolce-vita/birthday-cookie.jpg"
+        }
+      ]
+    }
+  ]
+}

@@ -39,7 +39,7 @@ export async function ProgressCard({ site }: { site: TenantSite }) {
 
   const balance = current.card.balance;
   const nextReward = site.rewards.find((r) => r.cost > balance);
-  const required = program.type === "stamps" ? program.stamps_required : nextReward?.cost ?? 0;
+  const required = program.type === "stamps" ? program.stamps_required : (nextReward?.cost ?? 0);
   const filled = Math.min(balance, required);
   const missing = required - filled;
 
@@ -48,7 +48,13 @@ export async function ProgressCard({ site }: { site: TenantSite }) {
       <h2 className="text-center font-display text-xl font-bold">Tu progreso</h2>
 
       {program.type === "stamps" ? (
-        <div className="mt-4 flex justify-center gap-2 rounded-full bg-brand-surface/95 px-3 py-2">
+        <div
+          className="mx-auto mt-4 grid w-fit justify-items-center gap-2 rounded-brand bg-brand-surface/95 px-4 py-3"
+          // Hasta 5 sellos en una fila; más, en dos filas parejas
+          style={{
+            gridTemplateColumns: `repeat(${required <= 5 ? required : Math.ceil(required / 2)}, minmax(0, 1fr))`,
+          }}
+        >
           {Array.from({ length: required }, (_, i) => (
             <StampIcon
               key={i}

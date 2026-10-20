@@ -6,7 +6,7 @@ export const whatsappUrl = (text: string) =>
   `https://wa.me/${WHATSAPP.replace(/\D/g, "")}?text=${encodeURIComponent(text)}`;
 
 // Negocio que se muestra como ejemplo en las páginas de producto (null = sin ejemplo)
-export const DEMO_URL: string | null = null;
+export const DEMO_URL: string | null = "/la-dolce-vita";
 
 export const PRODUCTS: { href: string; icon: IconName; title: string; summary: string }[] = [
   {

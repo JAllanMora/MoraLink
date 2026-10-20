@@ -22,7 +22,20 @@ async function Home({ params }: { params: PageProps<"/[tenant]">["params"] }) {
 
   return (
     <div className="space-y-5">
-      {site.tagline && <p className="text-center text-brand-muted">{site.tagline}</p>}
+      {site.cover_url ? (
+        <section
+          className="relative flex aspect-[4/3] items-end overflow-hidden rounded-brand bg-cover bg-center p-5 shadow-sm"
+          style={{ backgroundImage: `url(${site.cover_url})` }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+          <div className="relative text-white">
+            <p className="font-display text-3xl font-bold leading-tight">{site.name}</p>
+            {site.tagline && <p className="mt-1 text-sm opacity-95">{site.tagline}</p>}
+          </div>
+        </section>
+      ) : (
+        site.tagline && <p className="text-center text-brand-muted">{site.tagline}</p>
+      )}
 
       <Suspense fallback={<ProgressCardSkeleton />}>
         <ProgressCard site={site} />
