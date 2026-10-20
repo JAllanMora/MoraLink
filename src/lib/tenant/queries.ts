@@ -15,7 +15,7 @@ export async function getTenantSite(slug: string) {
   const db = createPublicClient();
   const { data: tenant } = await db
     .from("tenants")
-    .select("id, slug, name, tagline, logo_url, cover_url, theme, whatsapp, instagram, address")
+    .select("id, slug, name, tagline, logo_url, cover_url, theme, whatsapp, instagram, address, orders_enabled, delivery_enabled")
     .eq("slug", slug)
     .eq("active", true)
     .maybeSingle();

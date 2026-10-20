@@ -1,4 +1,4 @@
-import { Icon } from "./icons";
+import { Icon } from "@/components/icons";
 
 // Navegador con la página web de un negocio (solo ilustración)
 export function BrowserMockup() {

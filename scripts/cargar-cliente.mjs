@@ -57,6 +57,9 @@ const tenant = check(
         whatsapp: client.whatsapp ?? null,
         instagram: client.instagram ?? null,
         address: client.address ?? null,
+        // "orders": { "enabled": true, "delivery": true } activa los pedidos en línea
+        orders_enabled: client.orders?.enabled ?? false,
+        delivery_enabled: client.orders?.delivery ?? false,
       },
       { onConflict: "slug" },
     )

@@ -7,6 +7,7 @@
   "whatsapp": "+525517327009",
   "instagram": null,
   "address": null,
+  "orders": { "enabled": true, "delivery": true },
   "theme": {
     "primary": "#C0272D",
     "primaryForeground": "#FFFFFF",

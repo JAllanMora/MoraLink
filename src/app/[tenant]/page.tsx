@@ -44,7 +44,7 @@ async function Home({ params }: { params: PageProps<"/[tenant]">["params"] }) {
       <div className="space-y-3">
         <ButtonLink href={`/${site.slug}/recompensas`}>Ver mis recompensas</ButtonLink>
         <ButtonLink href={`/${site.slug}/menu`} variant="outline">
-          Conocer el menú
+          {site.orders_enabled ? "Haz tu pedido" : "Conocer el menú"}
         </ButtonLink>
       </div>
 

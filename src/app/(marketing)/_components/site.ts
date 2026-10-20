@@ -1,4 +1,4 @@
-import type { IconName } from "./icons";
+import type { IconName } from "@/components/icons";
 
 export const WHATSAPP = (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? "+52 55 1732 7009").trim();
 

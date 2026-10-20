@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { formatPrice } from "@/lib/format";
 import { getTenantSite } from "@/lib/tenant/queries";
+import { AddToCart } from "../_components/cart";
 
 export default function MenuPage({ params }: PageProps<"/[tenant]/menu">) {
   return (
@@ -17,7 +18,12 @@ async function Menu({ params }: { params: PageProps<"/[tenant]/menu">["params"] 
 
   return (
     <div className="space-y-8">
-      <h1 className="font-display text-3xl font-bold">Menú</h1>
+      <div>
+        <h1 className="font-display text-3xl font-bold">Menú</h1>
+        {site.orders_enabled && (
+          <p className="mt-1 text-brand-muted">Agrega lo que se te antoje y envíanos tu pedido.</p>
+        )}
+      </div>
 
       {site.menu.length === 0 && <p className="text-brand-muted">Pronto publicaremos nuestro menú.</p>}
 
@@ -41,6 +47,11 @@ async function Menu({ params }: { params: PageProps<"/[tenant]/menu">["params"] 
                     )}
                   </div>
                   {product.description && <p className="mt-1 text-sm text-brand-muted">{product.description}</p>}
+                  {site.orders_enabled && product.price != null && (
+                    <div className="mt-3 flex justify-end">
+                      <AddToCart product={{ id: product.id, name: product.name, price: product.price }} />
+                    </div>
+                  )}
                 </div>
               </li>
             ))}

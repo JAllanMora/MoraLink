@@ -1,4 +1,4 @@
-import { Icon, type IconName } from "./icons";
+import { Icon, type IconName } from "@/components/icons";
 import { WHATSAPP, whatsappUrl } from "./site";
 
 // Bloques que comparten el inicio y las páginas de producto

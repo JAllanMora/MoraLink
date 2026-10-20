@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { HeroCollage } from "./_components/hero-collage";
-import { Icon, type IconName } from "./_components/icons";
+import { Icon, type IconName } from "@/components/icons";
 import { BrushTitle, FinalCta, Steps, WhatsAppButton } from "./_components/sections";
 import { PRODUCTS } from "./_components/site";
 

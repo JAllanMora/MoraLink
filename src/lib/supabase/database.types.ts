@@ -121,6 +121,52 @@ isOneToOne: true
       referencedColumns: ["id"]
     }
                   ]
+                },"order_items": {
+                  Row: {
+                    "id": string,"name": string,"order_id": string,"price": number,"product_id": string | null,"quantity": number
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "id"?: string,"name": string,"order_id": string,"price"?: number,"product_id"?: string | null,"quantity": number
+                  }
+                  Update: {
+                    "id"?: string,"name"?: string,"order_id"?: string,"price"?: number,"product_id"?: string | null,"quantity"?: number
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "order_items_order_id_fkey"
+      columns: ["order_id"]
+isOneToOne: false
+      referencedRelation: "orders"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "order_items_product_id_fkey"
+      columns: ["product_id"]
+isOneToOne: false
+      referencedRelation: "products"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"orders": {
+                  Row: {
+                    "address": string | null,"created_at": string,"created_by": string | null,"customer_name": string,"customer_phone": string,"delivery": string,"id": string,"notes": string | null,"number": number,"status": string,"tenant_id": string,"token": string,"total": number,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "address"?: string | null,"created_at"?: string,"created_by"?: string | null,"customer_name": string,"customer_phone": string,"delivery"?: string,"id"?: string,"notes"?: string | null,"number": number,"status"?: string,"tenant_id": string,"token"?: string,"total"?: number,"updated_at"?: string
+                  }
+                  Update: {
+                    "address"?: string | null,"created_at"?: string,"created_by"?: string | null,"customer_name"?: string,"customer_phone"?: string,"delivery"?: string,"id"?: string,"notes"?: string | null,"number"?: number,"status"?: string,"tenant_id"?: string,"token"?: string,"total"?: number,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "orders_tenant_id_fkey"
+      columns: ["tenant_id"]
+isOneToOne: false
+      referencedRelation: "tenants"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"products": {
                   Row: {
                     "available": boolean,"category_id": string | null,"description": string | null,"id": string,"image_url": string | null,"name": string,"position": number,"price": number | null,"tenant_id": string
@@ -189,14 +235,14 @@ isOneToOne: false
                   ]
                 },"tenants": {
                   Row: {
-                    "active": boolean,"address": string | null,"billing_status": string,"cover_url": string | null,"created_at": string,"id": string,"instagram": string | null,"logo_url": string | null,"name": string,"plan": string,"slug": string,"tagline": string | null,"theme": NonNullable<Json>,"whatsapp": string | null
+                    "active": boolean,"address": string | null,"billing_status": string,"cover_url": string | null,"created_at": string,"delivery_enabled": boolean,"id": string,"instagram": string | null,"logo_url": string | null,"name": string,"orders_enabled": boolean,"plan": string,"slug": string,"tagline": string | null,"theme": NonNullable<Json>,"whatsapp": string | null
                   }
                   ComputedFields: never
                   Insert: {
-                    "active"?: boolean,"address"?: string | null,"billing_status"?: string,"cover_url"?: string | null,"created_at"?: string,"id"?: string,"instagram"?: string | null,"logo_url"?: string | null,"name": string,"plan"?: string,"slug": string,"tagline"?: string | null,"theme"?: NonNullable<Json>,"whatsapp"?: string | null
+                    "active"?: boolean,"address"?: string | null,"billing_status"?: string,"cover_url"?: string | null,"created_at"?: string,"delivery_enabled"?: boolean,"id"?: string,"instagram"?: string | null,"logo_url"?: string | null,"name": string,"orders_enabled"?: boolean,"plan"?: string,"slug": string,"tagline"?: string | null,"theme"?: NonNullable<Json>,"whatsapp"?: string | null
                   }
                   Update: {
-                    "active"?: boolean,"address"?: string | null,"billing_status"?: string,"cover_url"?: string | null,"created_at"?: string,"id"?: string,"instagram"?: string | null,"logo_url"?: string | null,"name"?: string,"plan"?: string,"slug"?: string,"tagline"?: string | null,"theme"?: NonNullable<Json>,"whatsapp"?: string | null
+                    "active"?: boolean,"address"?: string | null,"billing_status"?: string,"cover_url"?: string | null,"created_at"?: string,"delivery_enabled"?: boolean,"id"?: string,"instagram"?: string | null,"logo_url"?: string | null,"name"?: string,"orders_enabled"?: boolean,"plan"?: string,"slug"?: string,"tagline"?: string | null,"theme"?: NonNullable<Json>,"whatsapp"?: string | null
                   }
                   Relationships: [
                     
@@ -224,8 +270,16 @@ isOneToOne: false
             "add_loyalty":
 { Args: { "p_amount"?: number,"p_customer_code": string,"p_note"?: string,"p_tenant_id": string }; Returns: number
                            },
+"get_order":
+{ Args: { "p_token": string }; Returns: Json
+                           },
 "is_tenant_member":
 { Args: { "p_roles"?: (string)[],"p_tenant_id": string }; Returns: boolean
+                           },
+"place_order":
+{ Args: { "p_address"?: string,"p_customer_name": string,"p_customer_phone": string,"p_delivery"?: string,"p_items": Json,"p_notes"?: string,"p_tenant_slug": string }; Returns: {
+              "number": number,"token": string
+            }[]
                            },
 "redeem_reward":
 { Args: { "p_customer_code": string,"p_reward_id": string,"p_tenant_id": string }; Returns: number

@@ -1,5 +1,5 @@
 import { StampIcon } from "@/components/stamp-icon";
-import { Icon } from "./icons";
+import { Icon } from "@/components/icons";
 
 // Ilustración del inicio: los tres productos como tarjetas superpuestas
 export function HeroCollage() {

@@ -13,6 +13,7 @@ Cada negocio paga una mensualidad y recibe:
 - **Su programa de recompensas**: tarjeta de sellos (ej. 5 pizzas = 1 gratis) o puntos por compra.
 - **Tarjeta digital para sus clientes** con código QR, sin descargar apps.
 - **Caja** para que el personal sume sellos y canjee recompensas.
+- **Pedidos en línea** (opcional): el cliente arma su pedido desde el menú, recibe un número y un enlace para seguirlo, y el negocio los surte desde su panel.
 
 ## Stack
 
@@ -49,6 +50,9 @@ src/app/[tenant]/         Sitio de cada negocio
   entrar/                 Acceso con enlace por correo
   mi-tarjeta/             QR y código del cliente
   caja/                   Panel del personal (sumar sellos, canjear)
+  pedido/                 Carrito y envío del pedido
+  pedido/[token]/         Seguimiento del pedido (enlace que recibe el cliente)
+  pedidos/                Panel de pedidos del negocio
   auth/callback/          Destino del enlace de acceso
 src/lib/tenant/           Tema, lecturas del negocio y del cliente
 src/lib/supabase/         Clientes de Supabase y tipos generados
@@ -81,6 +85,8 @@ npm run dev
    ```
    Es idempotente: vuelve a correrlo cada vez que cambie su menú o recompensas. Con `MORALINK_APP_URL` y `REVALIDATE_SECRET` definidos, el sitio se actualiza al momento.
 4. El dueño entra en `https://moralink.app/<slug>/entrar` con ese correo y ya puede usar `/<slug>/caja`.
+
+Para recibir pedidos en línea agrega `"orders": { "enabled": true, "delivery": true }` al JSON (`delivery` permite envío a domicilio además de recoger en tienda).
 
 Campos del tema (`theme`): `primary`, `primaryForeground`, `background`, `surface`, `foreground`, `muted`, `accent`, `radius` y `fontDisplay` (`fraunces`, `playfair`, `poppins` o `inter`). Íconos de sello (`stamp_icon`): `pizza`, `coffee`, `burger`, `heart`, `star`.
 

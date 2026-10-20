@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { refresh } from "next/cache";
 import { requestOrigin } from "@/lib/origin";
 import { createClient } from "@/lib/supabase/server";
+import { isOrderStatus } from "@/lib/tenant/orders";
 import { getTenantSite } from "@/lib/tenant/queries";
 
 export type FormState = { ok: boolean; message: string } | null;
@@ -16,7 +17,9 @@ async function requireTenant(slug: string) {
 
 export async function requestLogin(slug: string, _prev: FormState, formData: FormData): Promise<FormState> {
   await requireTenant(slug);
-  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const email = String(formData.get("email") ?? "")
+    .trim()
+    .toLowerCase();
   if (!/^\S+@\S+\.\S+$/.test(email)) return { ok: false, message: "Escribe un correo válido." };
 
   const supabase = await createClient();
@@ -83,4 +86,60 @@ export async function redeemReward(slug: string, _prev: FormState, formData: For
   if (error) return { ok: false, message: RPC_ERRORS[error.code] ?? "No se pudo canjear." };
   refresh();
   return { ok: true, message: `Canjeado: ${reward?.name}. Saldo restante: ${data}.` };
+}
+
+export type OrderState = { ok: false; message: string } | { ok: true; token: string } | null;
+
+const ORDER_ERRORS: Record<string, string> = {
+  P0002: "Este negocio no está recibiendo pedidos en línea por ahora.",
+  "23514": "Revisa tu nombre y tu teléfono.",
+};
+
+export async function placeOrder(slug: string, _prev: OrderState, formData: FormData): Promise<OrderState> {
+  const site = await requireTenant(slug);
+  let items: { product_id: string; quantity: number }[];
+  try {
+    items = JSON.parse(String(formData.get("items") ?? "[]"));
+  } catch {
+    items = [];
+  }
+  if (!Array.isArray(items) || items.length === 0) return { ok: false, message: "Tu pedido está vacío." };
+
+  const name = String(formData.get("name") ?? "").trim();
+  const phone = String(formData.get("phone") ?? "").trim();
+  if (!name) return { ok: false, message: "Escribe tu nombre." };
+  if (phone.replace(/\D/g, "").length < 10) return { ok: false, message: "Escribe tu teléfono a 10 dígitos." };
+  const delivery = site.delivery_enabled && formData.get("delivery") === "delivery" ? "delivery" : "pickup";
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .rpc("place_order", {
+      p_tenant_slug: slug,
+      p_items: items.map((i) => ({ product_id: String(i.product_id), quantity: Number(i.quantity) })),
+      p_customer_name: name,
+      p_customer_phone: phone,
+      p_delivery: delivery,
+      p_address: String(formData.get("address") ?? ""),
+      p_notes: String(formData.get("notes") ?? ""),
+    })
+    .single();
+  if (error || !data) {
+    // Los mensajes de validación de place_order ya vienen en español
+    const message = error?.code === "22023" ? error.message : ORDER_ERRORS[error?.code ?? ""];
+    return { ok: false, message: message ?? "No pudimos enviar tu pedido. Intenta de nuevo." };
+  }
+  return { ok: true, token: data.token };
+}
+
+export async function setOrderStatus(slug: string, orderId: string, status: string) {
+  const site = await requireTenant(slug);
+  if (!isOrderStatus(status)) throw new Error("Estado inválido");
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("orders")
+    .update({ status, updated_at: new Date().toISOString() })
+    .eq("id", orderId)
+    .eq("tenant_id", site.id);
+  if (error) throw new Error("No se pudo actualizar el pedido");
+  refresh();
 }

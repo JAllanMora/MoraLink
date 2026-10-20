@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { Button, ButtonLink } from "@/components/button";
@@ -15,10 +16,7 @@ export default function StaffPage({ params, searchParams }: PageProps<"/[tenant]
   );
 }
 
-async function Staff({
-  params,
-  searchParams,
-}: Pick<PageProps<"/[tenant]/caja">, "params" | "searchParams">) {
+async function Staff({ params, searchParams }: Pick<PageProps<"/[tenant]/caja">, "params" | "searchParams">) {
   const site = await getTenantSite((await params).tenant);
   if (!site) notFound();
 
@@ -40,7 +38,14 @@ async function Staff({
 
   return (
     <div className="space-y-6">
-      <h1 className="font-display text-3xl font-bold">Caja</h1>
+      <div className="flex items-baseline justify-between">
+        <h1 className="font-display text-3xl font-bold">Caja</h1>
+        {site.orders_enabled && (
+          <Link href={`/${site.slug}/pedidos`} className="text-sm font-semibold text-brand">
+            Ver pedidos
+          </Link>
+        )}
+      </div>
 
       <section className="rounded-brand bg-brand-surface p-5 shadow-sm">
         <h2 className="mb-3 font-semibold">{isStamps ? "Sumar sello" : "Sumar puntos"}</h2>
@@ -49,14 +54,7 @@ async function Staff({
           {isStamps ? (
             <input type="hidden" name="amount" value="1" />
           ) : (
-            <input
-              name="amount"
-              type="number"
-              min={1}
-              required
-              placeholder="Puntos"
-              className={input}
-            />
+            <input name="amount" type="number" min={1} required placeholder="Puntos" className={input} />
           )}
           <Button type="submit">{isStamps ? "+1 sello" : "Sumar"}</Button>
         </ActionForm>
