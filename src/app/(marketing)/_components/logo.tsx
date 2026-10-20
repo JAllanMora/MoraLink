@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-// Logo de MoraLink: una mora. El mismo dibujo está en src/app/icon.svg (favicon).
+// Logo de MoraLink: una "m" de dos arcos enlazados con una mora. El mismo dibujo está en src/app/icon.svg (favicon).
 export function LogoMark({ className }: { className?: string }) {
   return <Image src="/logo-mora.svg" alt="" width={64} height={64} className={className} unoptimized />;
 }
