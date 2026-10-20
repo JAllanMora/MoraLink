@@ -1,51 +1,317 @@
 {
   "slug": "la-dolce-vita",
   "name": "La Dolce Vita",
-  "tagline": "Galletas gigantes hechas a mano",
-  "logo_url": null,
+  "tagline": "Cookies artesanales · Un pequeño lujo cotidiano",
+  "logo_url": "/clientes/la-dolce-vita/logo.png",
   "cover_url": "/clientes/la-dolce-vita/portada.jpg",
-  "whatsapp": null,
+  "whatsapp": "+525517327009",
   "instagram": null,
   "address": null,
   "orders": {
     "enabled": true,
-    "delivery": true
+    "delivery": false
   },
   "theme": {
-    "primary": "#C8436B",
+    "primary": "#CC0000",
     "primaryForeground": "#FFFFFF",
-    "background": "#FFF1EE",
-    "surface": "#FFFFFF",
-    "foreground": "#4A2A26",
-    "muted": "#8C6660",
-    "accent": "#B5612A",
+    "background": "#FFF9F0",
+    "surface": "#FFF0F4",
+    "foreground": "#32421E",
+    "muted": "#6B5A4E",
+    "accent": "#D58715",
     "fontDisplay": "playfair",
-    "radius": "1.5rem"
+    "fontBody": "montserrat",
+    "fontAccent": "cormorant",
+    "radius": "1.25rem"
   },
   "program": {
     "type": "stamps",
     "name": "Club Dolce Vita",
-    "description": "Junta 8 sellos y llévate una galleta gratis.",
+    "description": "Junta 8 sellos y llévate una cookie gratis.",
     "stamps_required": 8,
     "stamp_icon": "cookie"
   },
   "rewards": [
     {
-      "name": "Galleta gratis",
-      "description": "La que tú elijas.",
+      "name": "Cookie gratis",
+      "description": "La New York Cookie clásica que tú elijas.",
       "cost": 8
     }
   ],
   "catalog": [
     {
-      "category": "Galletas",
+      "category": "Cookies Clásicas",
+      "description": "New York Cookies. Grandes sabores, dulces momentos.",
       "image_url": "/clientes/la-dolce-vita/birthday-cookie.jpg",
       "products": [
         {
+          "name": "Clásica",
+          "description": "El sabor que nunca pasa de moda: una deliciosa galleta de vainilla con chispas de chocolate en cada mordida.",
+          "price": 30
+        },
+        {
           "name": "Birthday Cookie",
-          "description": "Masa de vainilla con chispas de colores.",
-          "price": null,
+          "description": "¡Una celebración en cada mordida! Nuestra galleta con divertidas chispas de colores, perfecta para alegrar cualquier día.",
+          "price": 30,
           "image_url": "/clientes/la-dolce-vita/birthday-cookie.jpg"
+        }
+      ]
+    },
+    {
+      "category": "Cookies Especiales",
+      "description": "New York Cookies con corazón relleno.",
+      "image_url": "/clientes/la-dolce-vita/galletas-caja.jpg",
+      "products": [
+        {
+          "name": "Nutella",
+          "description": "Para los amantes de las avellanas: una galleta con chispas de chocolate y un irresistible corazón de crema de avellanas.",
+          "price": 35
+        },
+        {
+          "name": "Red Velvet",
+          "description": "El encanto del Red Velvet en una galleta rellena de nuestro preparado casero de queso crema y decorada con chocolate blanco.",
+          "price": 38
+        },
+        {
+          "name": "Oreo",
+          "description": "¡Doble antojo de Oreo! Una galleta con trocitos de Oreo en la masa y una galleta Oreo original escondida en su interior.",
+          "price": 38
+        },
+        {
+          "name": "Secreto de Zarzamora",
+          "description": "Una combinación delicada y deliciosa: queso Philadelphia y zarzamora se encuentran en el corazón de esta galleta.",
+          "price": 38
+        }
+      ]
+    },
+    {
+      "category": "Cookies Premium",
+      "description": "Nuestras creaciones más especiales.",
+      "image_url": "/clientes/la-dolce-vita/capricho-de-cajeta.jpg",
+      "products": [
+        {
+          "name": "Kinder Bueno",
+          "description": "Una combinación irresistible de chocolates blanco y semiamargo en la masa y decoración, con un cremoso relleno casero de avellanas.",
+          "price": 50
+        },
+        {
+          "name": "Capricho de Cajeta",
+          "description": "Un dulce capricho con corazón de cajeta y un toque de canela, decorado con más cajeta, azúcar y canela.",
+          "price": 45,
+          "image_url": "/clientes/la-dolce-vita/capricho-de-cajeta.jpg"
+        },
+        {
+          "name": "Encanto de Zanahoria",
+          "description": "Todo el encanto de la zanahoria en una galleta con zanahoria rallada y deliciosos trocitos de queso Philadelphia.",
+          "price": 40,
+          "image_url": "/clientes/la-dolce-vita/encanto-de-zanahoria.jpg"
+        },
+        {
+          "name": "Beso de Guayaba",
+          "description": "Un dulce encuentro entre el ate de guayaba y los suaves trocitos de queso Philadelphia. Una combinación para enamorarse.",
+          "price": 40,
+          "image_url": "/clientes/la-dolce-vita/beso-de-guayaba.jpg"
+        }
+      ]
+    },
+    {
+      "category": "Panqués",
+      "description": "Suavecitos, esponjosos y elaborados artesanalmente. Sin sabores artificiales.",
+      "image_url": null,
+      "products": [
+        {
+          "name": "Panqué de Vainilla",
+          "description": "Un clásico que nunca falla. Panqué suave y esponjoso, con el delicado aroma de la vainilla. Perfecto para acompañar tus momentos favoritos.",
+          "variants": [
+            {
+              "name": "Estándar",
+              "price": 120,
+              "max": 1
+            },
+            {
+              "name": "Individual",
+              "price": 35,
+              "min": 4
+            }
+          ]
+        },
+        {
+          "name": "Panqué de Chocolate",
+          "description": "Para los amantes del chocolate. Un delicioso panqué artesanal con el intenso sabor de la cocoa, ideal para disfrutar algo dulce.",
+          "variants": [
+            {
+              "name": "Estándar",
+              "price": 120,
+              "max": 1
+            },
+            {
+              "name": "Individual",
+              "price": 35,
+              "min": 4
+            }
+          ]
+        },
+        {
+          "name": "Panqué de Plátano",
+          "description": "El sabor casero que tanto nos encanta. Un panqué suave, elaborado con plátano, perfecto para acompañar un café o disfrutar a cualquier hora.",
+          "variants": [
+            {
+              "name": "Estándar",
+              "price": 120,
+              "max": 1
+            },
+            {
+              "name": "Individual",
+              "price": 35,
+              "min": 4
+            }
+          ]
+        },
+        {
+          "name": "Banana Bread",
+          "description": "Elaborado con plátanos maduros, azúcar mascabado y nuez picada. Una combinación de sabor casero, notas acarameladas y un delicioso toque crujiente.",
+          "variants": [
+            {
+              "name": "Estándar",
+              "price": 120,
+              "max": 1
+            },
+            {
+              "name": "Individual",
+              "price": 35,
+              "min": 4
+            }
+          ]
+        },
+        {
+          "name": "Panqué de Zanahoria",
+          "description": "Una deliciosa combinación de zanahoria rallada y especias que le dan un aroma cálido y un sabor irresistible. Un clásico artesanal lleno de encanto.",
+          "variants": [
+            {
+              "name": "Estándar",
+              "price": 120,
+              "max": 1
+            },
+            {
+              "name": "Individual",
+              "price": 35,
+              "min": 4
+            }
+          ]
+        },
+        {
+          "name": "Panqué de Elote",
+          "description": "El sabor tradicional del elote en un panqué suave y delicioso. Una receta artesanal que nos recuerda los sabores de casa.",
+          "variants": [
+            {
+              "name": "Estándar",
+              "price": 120,
+              "max": 1
+            },
+            {
+              "name": "Individual",
+              "price": 35,
+              "min": 4
+            }
+          ]
+        },
+        {
+          "name": "Panqué de Arándanos con Chocolate Blanco",
+          "description": "Una combinación especial de arándanos y chocolate blanco, donde las notas frutales se encuentran con la dulzura del chocolate.",
+          "variants": [
+            {
+              "name": "Estándar",
+              "price": 120,
+              "max": 1
+            },
+            {
+              "name": "Individual",
+              "price": 35,
+              "min": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Cuernitos",
+      "description": "Masa suave elaborada con mantequilla real. Paquetes de 4 piezas, en bolsa o en caja.",
+      "image_url": "/clientes/la-dolce-vita/cuernitos.jpg",
+      "products": [
+        {
+          "name": "Cuernitos Naturales",
+          "description": "Un clásico irresistible: cuernitos artesanales de masa suave, elaborados con mantequilla real y horneados hasta conseguir un hermoso tono dorado.",
+          "variants": [
+            {
+              "name": "4 en bolsa",
+              "price": 70
+            },
+            {
+              "name": "4 en caja",
+              "price": 80
+            }
+          ],
+          "image_url": "/clientes/la-dolce-vita/cuernitos.jpg"
+        },
+        {
+          "name": "Cuernitos Rellenos de Nutella",
+          "description": "Nuestros suaves cuernitos artesanales, elaborados con mantequilla real y un delicioso relleno de Nutella. ¡Perfectos para consentirte!",
+          "variants": [
+            {
+              "name": "4 en bolsa",
+              "price": 100
+            },
+            {
+              "name": "4 en caja",
+              "price": 110
+            }
+          ]
+        },
+        {
+          "name": "Cuernitos Rellenos de Cajeta",
+          "description": "La combinación perfecta entre nuestra suave masa artesanal y un dulce relleno de cajeta. Un antojo para disfrutar en cualquier momento.",
+          "variants": [
+            {
+              "name": "4 en bolsa",
+              "price": 100
+            },
+            {
+              "name": "4 en caja",
+              "price": 110
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Brownies",
+      "description": "Un delicioso antojo de chocolate.",
+      "image_url": "/clientes/la-dolce-vita/brownies-charola.jpg",
+      "products": [
+        {
+          "name": "Brownie Clásico",
+          "description": "Un delicioso antojo de chocolate, con ese sabor casero que conquista desde el primer bocado. Perfecto para compartir… ¡o para consentirte!",
+          "price": 35,
+          "min": 4,
+          "image_url": "/clientes/la-dolce-vita/brownies-empaque.jpg"
+        },
+        {
+          "name": "Brownie de Almendras y Monk Fruit",
+          "description": "Una deliciosa alternativa para disfrutar del chocolate. Elaborado con harina de almendras y endulzado con monk fruit, para consentirte con un toque diferente.",
+          "price": 55,
+          "min": 2
+        }
+      ]
+    },
+    {
+      "category": "De temporada",
+      "description": "Muy pronto en La Dolce Vita.",
+      "image_url": null,
+      "products": [
+        {
+          "name": "Pan de Muerto",
+          "description": "En preparación.",
+          "coming_soon": true
         }
       ]
     }

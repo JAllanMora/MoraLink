@@ -7,7 +7,8 @@ import { formatPrice } from "@/lib/format";
 
 // Carrito del cliente final, guardado en su navegador por negocio. Nombre y
 // precio son solo para mostrar: el pedido se cobra con los precios del catálogo.
-export type CartLine = { id: string; name: string; price: number; quantity: number };
+// min/max: piezas mínimas y máximas por pedido de ese producto.
+export type CartLine = { id: string; name: string; price: number; quantity: number; min?: number; max?: number };
 
 type Cart = {
   lines: CartLine[];
@@ -54,7 +55,8 @@ export function CartProvider({ slug, children }: { slug: string; children: React
       total: lines.reduce((sum, l) => sum + l.price * l.quantity, 0),
       setQuantity: (product, quantity) => {
         const rest = lines.filter((l) => l.id !== product.id);
-        const q = Math.max(0, Math.min(99, quantity));
+        // Por debajo del mínimo se quita del carrito; nunca pasa del máximo
+        const q = quantity < (product.min ?? 1) ? 0 : Math.min(product.max ?? 99, quantity);
         const index = lines.findIndex((l) => l.id === product.id);
         if (q === 0) return save(rest);
         const line = { ...product, quantity: q };
@@ -76,34 +78,44 @@ export function AddToCart({ product }: { product: Omit<CartLine, "quantity"> }) 
     return (
       <button
         type="button"
-        onClick={() => setQuantity(product, 1)}
+        onClick={() => setQuantity(product, product.min ?? 1)}
         className="rounded-full bg-brand px-4 py-1.5 text-sm font-semibold text-brand-foreground active:scale-95"
       >
         Agregar
       </button>
     );
   }
-  return <Stepper quantity={quantity} onChange={(q) => setQuantity(product, q)} label={product.name} />;
+  return (
+    <Stepper quantity={quantity} max={product.max} onChange={(q) => setQuantity(product, q)} label={product.name} />
+  );
 }
 
 export function Stepper({
   quantity,
+  max = 99,
   onChange,
   label,
 }: {
   quantity: number;
+  max?: number;
   onChange: (quantity: number) => void;
   label: string;
 }) {
   const button =
-    "flex size-8 items-center justify-center rounded-full bg-brand text-lg font-bold text-brand-foreground active:scale-95";
+    "flex size-8 items-center justify-center rounded-full bg-brand text-lg font-bold text-brand-foreground active:scale-95 disabled:opacity-30";
   return (
     <div className="flex items-center gap-2">
       <button type="button" onClick={() => onChange(quantity - 1)} className={button} aria-label={`Quitar ${label}`}>
         −
       </button>
       <span className="w-6 text-center font-semibold tabular-nums">{quantity}</span>
-      <button type="button" onClick={() => onChange(quantity + 1)} className={button} aria-label={`Agregar ${label}`}>
+      <button
+        type="button"
+        onClick={() => onChange(quantity + 1)}
+        disabled={quantity >= max}
+        className={button}
+        aria-label={`Agregar ${label}`}
+      >
         +
       </button>
     </div>

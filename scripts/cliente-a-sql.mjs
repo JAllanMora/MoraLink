@@ -10,6 +10,7 @@
 
 import { readFile } from "node:fs/promises";
 import { parseArgs } from "node:util";
+import { productRows } from "./lib/catalogo.mjs";
 
 const { values, positionals } = parseArgs({
   allowPositionals: true,
@@ -78,15 +79,30 @@ on conflict (tenant_id, name) do update set description = excluded.description, 
 
 sql.push(`\nupdate public.products set available = false where tenant_id = ${tenant};`);
 for (const [position, section] of (client.catalog ?? []).entries()) {
-  sql.push(`insert into public.categories (tenant_id, name, image_url, position)
-values (${tenant}, ${[section.category, section.image_url, position].map(lit).join(", ")})
-on conflict (tenant_id, name) do update set image_url = excluded.image_url, position = excluded.position;`);
+  sql.push(`insert into public.categories (tenant_id, name, description, image_url, position)
+values (${tenant}, ${[section.category, section.description, section.image_url, position].map(lit).join(", ")})
+on conflict (tenant_id, name) do update set description = excluded.description, image_url = excluded.image_url,
+  position = excluded.position;`);
   const category = `(select id from public.categories where tenant_id = ${tenant} and name = ${lit(section.category)})`;
-  for (const [index, p] of (section.products ?? []).entries()) {
-    sql.push(`insert into public.products (tenant_id, category_id, name, description, price, image_url, position, available)
-values (${tenant}, ${category}, ${[p.name, p.description, p.price, p.image_url, index].map(lit).join(", ")}, true)
-on conflict (tenant_id, name) do update set category_id = excluded.category_id, description = excluded.description,
-  price = excluded.price, image_url = excluded.image_url, position = excluded.position, available = true;`);
+  for (const [index, p] of productRows(section).entries()) {
+    const columns = [
+      "name",
+      "description",
+      "price",
+      "image_url",
+      "group_name",
+      "variant",
+      "min_quantity",
+      "max_quantity",
+      "coming_soon",
+    ];
+    sql.push(`insert into public.products (tenant_id, category_id, position, available, ${columns.join(", ")})
+values (${tenant}, ${category}, ${index}, true, ${columns.map((c) => lit(p[c])).join(", ")})
+on conflict (tenant_id, name) do update set category_id = excluded.category_id, position = excluded.position, available = true,
+  ${columns
+    .slice(1)
+    .map((c) => `${c} = excluded.${c}`)
+    .join(", ")};`);
   }
 }
 

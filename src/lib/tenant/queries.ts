@@ -15,7 +15,9 @@ export async function getTenantSite(slug: string) {
   const db = createPublicClient();
   const { data: tenant } = await db
     .from("tenants")
-    .select("id, slug, name, tagline, logo_url, cover_url, theme, whatsapp, instagram, address, orders_enabled, delivery_enabled")
+    .select(
+      "id, slug, name, tagline, logo_url, cover_url, theme, whatsapp, instagram, address, orders_enabled, delivery_enabled",
+    )
     .eq("slug", slug)
     .eq("active", true)
     .maybeSingle();
@@ -25,12 +27,7 @@ export async function getTenantSite(slug: string) {
     db.from("loyalty_programs").select("*").eq("tenant_id", tenant.id).maybeSingle(),
     db.from("rewards").select("*").eq("tenant_id", tenant.id).eq("active", true).order("cost").order("position"),
     db.from("categories").select("*").eq("tenant_id", tenant.id).order("position"),
-    db
-      .from("products")
-      .select("*")
-      .eq("tenant_id", tenant.id)
-      .eq("available", true)
-      .order("position"),
+    db.from("products").select("*").eq("tenant_id", tenant.id).eq("available", true).order("position"),
   ]);
 
   const menu = (categories.data ?? [])

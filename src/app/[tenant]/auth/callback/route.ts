@@ -27,4 +27,3 @@ export async function GET(request: NextRequest, { params }: RouteContext<"/[tena
 function safePath(path: string | null, fallback: string) {
   return path && path.startsWith("/") && !path.startsWith("//") ? path : fallback;
 }
-

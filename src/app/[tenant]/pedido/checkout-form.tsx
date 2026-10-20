@@ -57,7 +57,12 @@ export function CheckoutForm({
                 <p className="font-semibold">{line.name}</p>
                 <p className="text-sm text-brand-muted">{formatPrice(line.price * line.quantity)}</p>
               </div>
-              <Stepper quantity={line.quantity} onChange={(q) => cart.setQuantity(line, q)} label={line.name} />
+              <Stepper
+                quantity={line.quantity}
+                max={line.max}
+                onChange={(q) => cart.setQuantity(line, q)}
+                label={line.name}
+              />
             </li>
           ))}
         </ul>
@@ -121,7 +126,7 @@ export function CheckoutForm({
           name="notes"
           maxLength={1000}
           rows={2}
-          placeholder="Notas (opcional): sin cebolla, hora de entrega…"
+          placeholder="Notas (opcional): hora para recoger, dedicatoria…"
           className={input}
         />
 

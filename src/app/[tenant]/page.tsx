@@ -29,6 +29,10 @@ async function Home({ params }: { params: PageProps<"/[tenant]">["params"] }) {
         >
           <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
           <div className="relative text-white">
+            {site.logo_url && (
+              // eslint-disable-next-line @next/next/no-img-element -- logo del negocio
+              <img src={site.logo_url} alt="" className="mb-3 size-20 rounded-full shadow-lg" />
+            )}
             <p className="font-display text-3xl font-bold leading-tight">{site.name}</p>
             {site.tagline && <p className="mt-1 text-sm opacity-95">{site.tagline}</p>}
           </div>

@@ -25,14 +25,14 @@ export type Database = {
           Tables: {
             "categories": {
                   Row: {
-                    "id": string,"image_url": string | null,"name": string,"position": number,"tenant_id": string
+                    "description": string | null,"id": string,"image_url": string | null,"name": string,"position": number,"tenant_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "id"?: string,"image_url"?: string | null,"name": string,"position"?: number,"tenant_id": string
+                    "description"?: string | null,"id"?: string,"image_url"?: string | null,"name": string,"position"?: number,"tenant_id": string
                   }
                   Update: {
-                    "id"?: string,"image_url"?: string | null,"name"?: string,"position"?: number,"tenant_id"?: string
+                    "description"?: string | null,"id"?: string,"image_url"?: string | null,"name"?: string,"position"?: number,"tenant_id"?: string
                   }
                   Relationships: [
                     {
@@ -169,14 +169,14 @@ isOneToOne: false
                   ]
                 },"products": {
                   Row: {
-                    "available": boolean,"category_id": string | null,"description": string | null,"id": string,"image_url": string | null,"name": string,"position": number,"price": number | null,"tenant_id": string
+                    "available": boolean,"category_id": string | null,"coming_soon": boolean,"description": string | null,"group_name": string | null,"id": string,"image_url": string | null,"max_quantity": number,"min_quantity": number,"name": string,"position": number,"price": number | null,"tenant_id": string,"variant": string | null
                   }
                   ComputedFields: never
                   Insert: {
-                    "available"?: boolean,"category_id"?: string | null,"description"?: string | null,"id"?: string,"image_url"?: string | null,"name": string,"position"?: number,"price"?: number | null,"tenant_id": string
+                    "available"?: boolean,"category_id"?: string | null,"coming_soon"?: boolean,"description"?: string | null,"group_name"?: string | null,"id"?: string,"image_url"?: string | null,"max_quantity"?: number,"min_quantity"?: number,"name": string,"position"?: number,"price"?: number | null,"tenant_id": string,"variant"?: string | null
                   }
                   Update: {
-                    "available"?: boolean,"category_id"?: string | null,"description"?: string | null,"id"?: string,"image_url"?: string | null,"name"?: string,"position"?: number,"price"?: number | null,"tenant_id"?: string
+                    "available"?: boolean,"category_id"?: string | null,"coming_soon"?: boolean,"description"?: string | null,"group_name"?: string | null,"id"?: string,"image_url"?: string | null,"max_quantity"?: number,"min_quantity"?: number,"name"?: string,"position"?: number,"price"?: number | null,"tenant_id"?: string,"variant"?: string | null
                   }
                   Relationships: [
                     {

@@ -13,6 +13,7 @@
 import { readFile } from "node:fs/promises";
 import { parseArgs } from "node:util";
 import { createClient } from "@supabase/supabase-js";
+import { productRows } from "./lib/catalogo.mjs";
 
 const { values, positionals } = parseArgs({
   allowPositionals: true,
@@ -70,9 +71,7 @@ const tenant = check(
 
 if (client.program) {
   check(
-    await db
-      .from("loyalty_programs")
-      .upsert({ tenant_id: tenant.id, ...client.program }, { onConflict: "tenant_id" }),
+    await db.from("loyalty_programs").upsert({ tenant_id: tenant.id, ...client.program }, { onConflict: "tenant_id" }),
     "el programa",
   );
 }
@@ -97,7 +96,13 @@ for (const [position, section] of (client.catalog ?? []).entries()) {
     await db
       .from("categories")
       .upsert(
-        { tenant_id: tenant.id, name: section.category, image_url: section.image_url ?? null, position },
+        {
+          tenant_id: tenant.id,
+          name: section.category,
+          description: section.description ?? null,
+          image_url: section.image_url ?? null,
+          position,
+        },
         { onConflict: "tenant_id,name" },
       )
       .select("id")
@@ -105,14 +110,11 @@ for (const [position, section] of (client.catalog ?? []).entries()) {
     `la categoría ${section.category}`,
   );
 
-  const products = (section.products ?? []).map((product, index) => ({
+  const products = productRows(section).map((product, index) => ({
     tenant_id: tenant.id,
     category_id: category.id,
     available: true,
     position: index,
-    description: null,
-    price: null,
-    image_url: null,
     ...product,
   }));
   productCount += products.length;
@@ -125,10 +127,7 @@ if (values.duenio) {
   const email = values.duenio.toLowerCase();
   let userId = await findUserId(email);
   if (!userId) {
-    const created = check(
-      await db.auth.admin.createUser({ email, email_confirm: true }),
-      "el usuario del dueño",
-    );
+    const created = check(await db.auth.admin.createUser({ email, email_confirm: true }), "el usuario del dueño");
     userId = created.user.id;
   }
   check(
@@ -151,9 +150,7 @@ if (appUrl && process.env.REVALIDATE_SECRET) {
   console.log(res.ok ? "Caché del sitio actualizado." : `No se pudo refrescar el caché (${res.status}).`);
 }
 
-console.log(
-  `Listo: ${client.name} (${client.slug}) con ${productCount} productos y ${rewards.length} recompensas.`,
-);
+console.log(`Listo: ${client.name} (${client.slug}) con ${productCount} productos y ${rewards.length} recompensas.`);
 
 async function findUserId(email) {
   for (let page = 1; ; page++) {

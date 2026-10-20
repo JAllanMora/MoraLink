@@ -34,7 +34,7 @@ async function TenantFrame({
 
   return (
     <CartProvider slug={site.slug}>
-      <div style={themeStyle(site.theme)} className="min-h-screen bg-brand-background text-brand-ink">
+      <div style={themeStyle(site.theme)} className="min-h-screen bg-brand-background font-sans text-brand-ink">
         <div className="mx-auto flex min-h-screen max-w-md flex-col">
           <header className="flex items-center justify-between px-5 py-4">
             <Link href={`/${site.slug}`} className="flex items-center gap-3">

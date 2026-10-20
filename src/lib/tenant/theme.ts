@@ -9,12 +9,16 @@ export type TenantTheme = {
   foreground: string;
   muted: string;
   accent: string;
-  fontDisplay: DisplayFont;
+  fontDisplay: Font;
+  // Texto corrido y botones
+  fontBody: Font;
+  // Nombres de productos y categorías (si no se da, la de títulos)
+  fontAccent?: Font;
   radius: string;
 };
 
-export const DISPLAY_FONTS = ["fraunces", "playfair", "poppins", "inter"] as const;
-export type DisplayFont = (typeof DISPLAY_FONTS)[number];
+export const FONTS = ["fraunces", "playfair", "cormorant", "poppins", "montserrat", "inter"] as const;
+export type Font = (typeof FONTS)[number];
 
 export const DEFAULT_THEME: TenantTheme = {
   primary: "#1F2937",
@@ -25,12 +29,15 @@ export const DEFAULT_THEME: TenantTheme = {
   muted: "#6B7280",
   accent: "#059669",
   fontDisplay: "inter",
+  fontBody: "inter",
   radius: "1rem",
 };
 
 export function resolveTheme(raw: unknown): TenantTheme {
   const theme = { ...DEFAULT_THEME, ...(raw && typeof raw === "object" ? raw : {}) } as TenantTheme;
-  if (!DISPLAY_FONTS.includes(theme.fontDisplay)) theme.fontDisplay = DEFAULT_THEME.fontDisplay;
+  if (!FONTS.includes(theme.fontDisplay)) theme.fontDisplay = DEFAULT_THEME.fontDisplay;
+  if (!FONTS.includes(theme.fontBody)) theme.fontBody = DEFAULT_THEME.fontBody;
+  if (theme.fontAccent && !FONTS.includes(theme.fontAccent)) delete theme.fontAccent;
   return theme;
 }
 
@@ -46,5 +53,7 @@ export function themeStyle(theme: TenantTheme): CSSProperties {
     "--brand-accent": theme.accent,
     "--brand-radius": theme.radius,
     "--brand-font-display": `var(--font-${theme.fontDisplay})`,
+    "--brand-font-body": `var(--font-${theme.fontBody})`,
+    "--brand-font-accent": `var(--font-${theme.fontAccent ?? theme.fontDisplay})`,
   } as CSSProperties;
 }
