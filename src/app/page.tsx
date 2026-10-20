@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Icon, type IconName } from "./_landing/icons";
+import { Logo } from "./_landing/logo";
 import { PhoneMockup } from "./_landing/phone-mockup";
 
 // Landing de MoraLink en moralink.app
@@ -13,36 +14,35 @@ const BUSINESSES = ["Restaurantes", "Cafeterías", "Barberías", "Estéticas", "
 const FEATURES: { icon: IconName; color: string; title: string; body: string }[] = [
   {
     icon: "users",
-    color: "bg-[#F9D9D6] text-tomato",
+    color: "bg-[#F7D9EC] text-[#A3307A]",
     title: "Fideliza a tus clientes",
     body: "Convierte visitas ocasionales en clientes frecuentes.",
   },
   {
     icon: "gift",
-    color: "bg-[#D6EBD9] text-basil",
+    color: "bg-[#E6DAF8] text-violet",
     title: "Recompensas personalizadas",
     body: "Productos gratis, descuentos o promociones especiales.",
   },
   {
     icon: "qr",
-    color: "bg-[#F8E8B8] text-forest",
+    color: "bg-[#FCEBC7] text-[#9A5B00]",
     title: "Fácil de usar",
     body: "Tus clientes escanean un código QR y empiezan a acumular.",
   },
   {
     icon: "chart",
-    color: "bg-[#D4E6F1] text-[#1E5A85]",
+    color: "bg-[#D8EFE6] text-[#1F6B52]",
     title: "Adaptado a tu negocio",
     body: "Diseñamos el programa según tus productos y objetivos.",
   },
 ];
 
-const MODELS: { icon: IconName; tag: string; title: string; body: string; points: string[] }[] = [
+const PRODUCTS: { icon: IconName; title: string; body: string; points: string[] }[] = [
   {
     icon: "gift",
-    tag: "Modelo 1",
-    title: "Sistema de recompensas",
-    body: "Una tarjeta de lealtad digital para cualquier tipo de negocio, sin apps ni tarjetas de cartón.",
+    title: "Programa de recompensas",
+    body: "Una tarjeta de lealtad digital para cualquier negocio, sin apps ni tarjetas de cartón.",
     points: [
       "Tarjeta de sellos o puntos con tu marca",
       "Código QR personal para cada cliente",
@@ -51,15 +51,25 @@ const MODELS: { icon: IconName; tag: string; title: string; body: string; points
     ],
   },
   {
-    icon: "catalog",
-    tag: "Modelo 2",
-    title: "Página web y catálogo",
+    icon: "store",
+    title: "Página web",
     body: "Tu negocio en internet con tu propio enlace, listo para compartir en redes y en WhatsApp.",
     points: [
       "Tu página en moralink.app/tu-negocio",
-      "Menú o catálogo de productos con precios",
       "Tu logo, tus colores y tus fotos",
+      "Ubicación, horario y redes sociales",
       "Botón directo a tu WhatsApp",
+    ],
+  },
+  {
+    icon: "catalog",
+    title: "Catálogo de productos",
+    body: "Tu menú o tus productos siempre al día, para que tus clientes vean todo lo que ofreces.",
+    points: [
+      "Productos por categorías con fotos y precios",
+      "Ideal para menús, tiendas y servicios",
+      "Lo actualizamos cuando cambies precios",
+      "Compártelo con un enlace o un QR",
     ],
   },
 ];
@@ -72,22 +82,19 @@ const STEPS = [
 
 export default function Landing() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-cream text-forest">
+    <div className="min-h-screen overflow-x-hidden bg-paper text-ink">
       <header className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="flex size-9 items-center justify-center rounded-full bg-tomato text-white">
-            <Icon name="gift" className="size-5" />
-          </span>
-          <span className="font-serif text-2xl font-bold">MoraLink</span>
+        <Link href="/" aria-label="MoraLink">
+          <Logo />
         </Link>
         <nav className="hidden items-center gap-8 text-sm font-semibold md:flex">
-          <a href="#servicios" className="hover:text-tomato">Servicios</a>
-          <a href="#como-funciona" className="hover:text-tomato">Cómo funciona</a>
-          <Link href={DEMO_URL} className="hover:text-tomato">Ver demo</Link>
+          <a href="#servicios" className="hover:text-violet">Servicios</a>
+          <a href="#como-funciona" className="hover:text-violet">Cómo funciona</a>
+          <Link href={DEMO_URL} className="hover:text-violet">Ver demo</Link>
         </nav>
         <a
           href={whatsappUrl("Hola, quiero información de MoraLink")}
-          className="rounded-full bg-forest px-4 py-2 text-sm font-semibold text-cream transition hover:bg-basil"
+          className="rounded-full bg-ink px-4 py-2 text-sm font-semibold text-paper transition hover:bg-basil"
         >
           Contáctanos
         </a>
@@ -100,14 +107,14 @@ export default function Landing() {
             <h1 className="font-serif text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl">
               Tus clientes frecuentes
               <span className="relative mt-3 block w-fit">
-                <span className="absolute inset-x-[-0.4em] inset-y-[0.05em] -rotate-2 rounded-[1.2rem_0.6rem_1.4rem_0.5rem] bg-tomato" />
+                <span className="absolute inset-x-[-0.4em] inset-y-[0.05em] -rotate-2 rounded-[1.2rem_0.6rem_1.4rem_0.5rem] bg-violet" />
                 <span className="relative whitespace-nowrap font-script text-[2.6rem] font-bold text-white sm:text-7xl">
                   merecen recompensas
                 </span>
               </span>
             </h1>
-            <p className="mt-8 max-w-xl text-lg text-forest/80">
-              Programa de lealtad digital, página web y catálogo de productos para tu negocio. Con tu marca, en tu
+            <p className="mt-8 max-w-xl text-lg text-ink/80">
+              Programa de recompensas, página web y catálogo de productos para tu negocio. Con tu marca, en tu
               propio enlace y sin que tus clientes descarguen nada.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -120,63 +127,66 @@ export default function Landing() {
               </a>
               <Link
                 href={DEMO_URL}
-                className="flex items-center justify-center rounded-full border-2 border-forest px-6 py-3 font-semibold transition hover:bg-forest hover:text-cream"
+                className="flex items-center justify-center rounded-full border-2 border-ink px-6 py-3 font-semibold transition hover:bg-ink hover:text-paper"
               >
                 Ver un ejemplo
               </Link>
             </div>
-            <p className="mt-10 max-w-sm -rotate-2 font-script text-3xl leading-tight text-forest/90">
+            <p className="mt-10 max-w-sm -rotate-2 font-script text-3xl leading-tight text-ink/90">
               Más clientes, más pedidos y una comunidad que siempre regresa{" "}
-              <span className="text-tomato">♥</span>
+              <span className="text-violet">♥</span>
             </p>
           </div>
           <PhoneMockup />
         </section>
 
         {/* Tipos de negocio */}
-        <section className="border-y border-forest/10 bg-cream-dark/60 py-5">
-          <ul className="mx-auto flex max-w-6xl flex-wrap justify-center gap-x-6 gap-y-2 px-5 text-sm font-semibold text-forest/70">
-            <li className="text-forest">Para cualquier negocio:</li>
+        <section className="border-y border-ink/10 bg-paper-dark/60 py-5">
+          <ul className="mx-auto flex max-w-6xl flex-wrap justify-center gap-x-6 gap-y-2 px-5 text-sm font-semibold text-ink/70">
+            <li className="text-ink">Para cualquier negocio:</li>
             {BUSINESSES.map((business) => (
               <li key={business}>{business}</li>
             ))}
           </ul>
         </section>
 
-        {/* Dos modelos */}
+        {/* Productos */}
         <section id="servicios" className="mx-auto max-w-6xl scroll-mt-6 px-5 py-20">
-          <h2 className="text-center font-serif text-4xl font-bold">Dos formas de hacer crecer tu negocio</h2>
-          <p className="mx-auto mt-3 max-w-2xl text-center text-forest/75">
+          <h2 className="text-center font-serif text-4xl font-bold">Tres formas de hacer crecer tu negocio</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-ink/75">
             Contrata uno o combínalos. Pagas una mensualidad y nosotros nos encargamos de todo.
           </p>
-          <div className="mt-12 grid gap-6 md:grid-cols-2">
-            {MODELS.map((model, index) => (
-              <article
-                key={model.title}
-                className={`rounded-[2rem] p-8 shadow-sm ${index === 0 ? "bg-tomato text-white" : "bg-white"}`}
-              >
-                <div className="flex items-center gap-3">
+          <div className="mt-12 grid gap-6 lg:grid-cols-3">
+            {PRODUCTS.map((product, index) => {
+              const featured = index === 0;
+              return (
+                <article
+                  key={product.title}
+                  className={`rounded-[2rem] p-7 shadow-sm ${featured ? "bg-violet text-white" : "bg-white"}`}
+                >
                   <span
                     className={`flex size-12 items-center justify-center rounded-full ${
-                      index === 0 ? "bg-white text-tomato" : "bg-cream text-basil"
+                      featured ? "bg-white text-violet" : "bg-paper-dark text-violet"
                     }`}
                   >
-                    <Icon name={model.icon} className="size-6" />
+                    <Icon name={product.icon} className="size-6" />
                   </span>
-                  <span className="text-xs font-bold uppercase tracking-widest opacity-75">{model.tag}</span>
-                </div>
-                <h3 className="mt-5 font-serif text-3xl font-bold">{model.title}</h3>
-                <p className={`mt-2 ${index === 0 ? "text-white/85" : "text-forest/75"}`}>{model.body}</p>
-                <ul className="mt-6 space-y-3">
-                  {model.points.map((point) => (
-                    <li key={point} className="flex items-start gap-3 font-medium">
-                      <Icon name="check" className={`mt-0.5 size-5 shrink-0 ${index === 0 ? "" : "text-basil"}`} />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
+                  <h3 className="mt-5 font-serif text-2xl font-bold">{product.title}</h3>
+                  <p className={`mt-2 ${featured ? "text-white/85" : "text-ink/75"}`}>{product.body}</p>
+                  <ul className="mt-6 space-y-3">
+                    {product.points.map((point) => (
+                      <li key={point} className="flex items-start gap-3 font-medium">
+                        <Icon
+                          name="check"
+                          className={`mt-0.5 size-5 shrink-0 ${featured ? "text-mango" : "text-violet"}`}
+                        />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              );
+            })}
           </div>
         </section>
 
@@ -190,7 +200,7 @@ export default function Landing() {
                 </span>
                 <div>
                   <h3 className="font-serif text-lg font-bold leading-tight">{feature.title}</h3>
-                  <p className="mt-1 text-sm text-forest/75">{feature.body}</p>
+                  <p className="mt-1 text-sm text-ink/75">{feature.body}</p>
                 </div>
               </li>
             ))}
@@ -198,17 +208,17 @@ export default function Landing() {
         </section>
 
         {/* Cómo funciona */}
-        <section id="como-funciona" className="scroll-mt-6 bg-forest py-20 text-cream">
+        <section id="como-funciona" className="scroll-mt-6 bg-ink py-20 text-paper">
           <div className="mx-auto max-w-6xl px-5">
             <h2 className="text-center font-serif text-4xl font-bold">Así de fácil</h2>
             <ol className="mt-12 grid gap-8 md:grid-cols-3">
               {STEPS.map((step, index) => (
                 <li key={step.title} className="text-center">
-                  <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-tomato font-serif text-2xl font-bold text-white">
+                  <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-violet font-serif text-2xl font-bold text-white">
                     {index + 1}
                   </span>
                   <h3 className="mt-4 font-serif text-xl font-bold">{step.title}</h3>
-                  <p className="mt-2 text-cream/75">{step.body}</p>
+                  <p className="mt-2 text-paper/75">{step.body}</p>
                 </li>
               ))}
             </ol>
@@ -218,7 +228,7 @@ export default function Landing() {
         {/* Llamado final */}
         <section className="mx-auto max-w-6xl px-5 py-20 text-center">
           <h2 className="mx-auto max-w-2xl font-serif text-4xl font-bold">
-            Haz que tus clientes <span className="font-script text-5xl text-tomato">siempre regresen</span>
+            Haz que tus clientes <span className="font-script text-5xl text-violet">siempre regresen</span>
           </h2>
           <a
             href={whatsappUrl("Hola, quiero MoraLink para mi negocio")}
@@ -233,8 +243,9 @@ export default function Landing() {
         </section>
       </main>
 
-      <footer className="border-t border-forest/10 py-8 text-center text-sm text-forest/60">
-        © 2026 MoraLink · Lealtad digital para tu negocio
+      <footer className="flex flex-col items-center gap-3 border-t border-ink/10 py-8 text-sm text-ink/60">
+        <Logo />
+        <p>© 2026 MoraLink · Recompensas, páginas web y catálogos para tu negocio</p>
       </footer>
     </div>
   );

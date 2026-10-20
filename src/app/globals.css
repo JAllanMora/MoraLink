@@ -15,11 +15,13 @@
   --font-serif: var(--font-fraunces);
   --font-script: var(--font-caveat);
 
-  /* Identidad de MoraLink (landing) */
-  --color-cream: #fbf3e4;
-  --color-cream-dark: #f3e6cc;
-  --color-forest: #1f3b2d;
-  --color-tomato: #c0272d;
+  /* Identidad de MoraLink (landing): morado y lila */
+  --color-paper: #f8f4fd;
+  --color-paper-dark: #ece3f8;
+  --color-ink: #2a1846;
+  --color-violet: #6b3fb5;
+  --color-lilac: #c7b2ee;
+  --color-mango: #f5a524;
   --color-basil: #1f7a45;
 }
 
