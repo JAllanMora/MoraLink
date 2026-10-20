@@ -1,11 +1,19 @@
 import { StampIcon } from "@/components/stamp-icon";
 
-// Celular de ejemplo con la tarjeta de un negocio (solo ilustración)
-export function PhoneMockup() {
+// Marco de celular para las ilustraciones
+export function PhoneFrame({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative mx-auto w-[260px] rotate-2 rounded-[2.6rem] border-[10px] border-ink bg-ink shadow-2xl shadow-ink/30 sm:w-[290px]">
       <div className="absolute left-1/2 top-0 h-5 w-24 -translate-x-1/2 rounded-b-2xl bg-ink" />
-      <div className="overflow-hidden rounded-[2rem] bg-paper px-4 pb-6 pt-8 text-ink">
+      <div className="overflow-hidden rounded-[2rem] bg-paper px-4 pb-6 pt-8 text-ink">{children}</div>
+    </div>
+  );
+}
+
+// Celular con la tarjeta de recompensas de un negocio (solo ilustración)
+export function PhoneMockup() {
+  return (
+    <PhoneFrame>
         <div className="flex flex-col items-center gap-1">
           <span className="flex size-10 items-center justify-center rounded-full bg-violet text-white">
             <StampIcon name="coffee" className="size-6" />
@@ -50,7 +58,42 @@ export function PhoneMockup() {
             </div>
           ))}
         </div>
+    </PhoneFrame>
+  );
+}
+
+// Celular con el catálogo de una tienda (solo ilustración)
+export function CatalogMockup() {
+  const sections = [
+    { name: "Pan dulce", items: [["Concha de vainilla", "$18"], ["Cuerno de mantequilla", "$22"]] },
+    { name: "Pasteles", items: [["Tres leches (rebanada)", "$55"], ["Pastel de chocolate", "$480"]] },
+    { name: "Bebidas", items: [["Café de olla", "$30"]] },
+  ];
+  return (
+    <PhoneFrame>
+      <p className="text-center font-serif text-lg font-bold">Panadería La Espiga</p>
+      <div className="mt-3 flex gap-1.5 overflow-hidden text-[11px] font-semibold">
+        {sections.map((section, index) => (
+          <span
+            key={section.name}
+            className={`shrink-0 rounded-full px-3 py-1 ${index === 0 ? "bg-violet text-white" : "bg-white text-ink/70"}`}
+          >
+            {section.name}
+          </span>
+        ))}
       </div>
-    </div>
+      {sections.map((section) => (
+        <div key={section.name} className="mt-3">
+          <p className="text-xs font-bold text-violet">{section.name}</p>
+          {section.items.map(([name, price]) => (
+            <div key={name} className="mt-1.5 flex items-center gap-2.5 rounded-xl bg-white p-2 shadow-sm">
+              <span className="size-9 shrink-0 rounded-lg bg-[#FCEBC7]" />
+              <span className="flex-1 text-xs font-semibold">{name}</span>
+              <span className="text-xs font-bold">{price}</span>
+            </div>
+          ))}
+        </div>
+      ))}
+    </PhoneFrame>
   );
 }
