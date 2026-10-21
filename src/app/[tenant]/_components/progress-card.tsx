@@ -41,7 +41,10 @@ export async function ProgressCard({ site }: { site: TenantSite }) {
   const nextReward = site.rewards.find((r) => r.cost > balance);
   const required = program.type === "stamps" ? program.stamps_required : (nextReward?.cost ?? 0);
   const filled = Math.min(balance, required);
-  const missing = required - filled;
+  // La mejor recompensa que ya alcanza y la siguiente meta
+  const unlocked = site.rewards.filter((r) => r.cost <= balance).at(-1);
+  const missing = nextReward ? nextReward.cost - balance : 0;
+  const milestones = new Set(site.rewards.map((r) => r.cost));
 
   return (
     <section className="rounded-brand bg-brand p-5 text-brand-foreground">
@@ -56,11 +59,16 @@ export async function ProgressCard({ site }: { site: TenantSite }) {
           }}
         >
           {Array.from({ length: required }, (_, i) => (
-            <StampIcon
+            <span
               key={i}
-              name={program.stamp_icon}
-              className={`size-9 ${i < filled ? "text-brand" : "text-brand-muted opacity-40"}`}
-            />
+              // Los sellos donde se gana una recompensa llevan un aro
+              className={`rounded-full p-0.5 ${milestones.has(i + 1) ? "ring-2 ring-brand/60" : ""}`}
+            >
+              <StampIcon
+                name={program.stamp_icon}
+                className={`size-9 ${i < filled ? "text-brand" : "text-brand-muted opacity-40"}`}
+              />
+            </span>
           ))}
         </div>
       ) : (
@@ -68,9 +76,12 @@ export async function ProgressCard({ site }: { site: TenantSite }) {
       )}
 
       <p className="mt-3 text-center text-sm font-medium">
-        {missing > 0
-          ? `¡Te ${missing === 1 ? "falta" : "faltan"} ${pluralize(missing, one, many)} para tu recompensa!`
-          : "¡Ya puedes canjear una recompensa! Muéstrale tu tarjeta al personal."}
+        {unlocked && `¡Ya puedes canjear: ${unlocked.name}! `}
+        {nextReward
+          ? `Te ${missing === 1 ? "falta" : "faltan"} ${pluralize(missing, one, many)} para: ${nextReward.name}.`
+          : unlocked
+            ? "Muéstrale tu tarjeta al personal."
+            : null}
       </p>
 
       <Link

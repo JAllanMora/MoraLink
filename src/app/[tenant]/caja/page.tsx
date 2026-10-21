@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { Button, ButtonLink } from "@/components/button";
+import { formatPrice } from "@/lib/format";
 import { isTenantStaff } from "@/lib/tenant/customer";
 import { getTenantSite } from "@/lib/tenant/queries";
 import { addLoyalty, redeemReward } from "../actions";
@@ -33,6 +34,7 @@ async function Staff({ params, searchParams }: Pick<PageProps<"/[tenant]/caja">,
   const { codigo } = await searchParams;
   const code = typeof codigo === "string" ? codigo : "";
   const isStamps = site.program?.type !== "points";
+  const spendPerStamp = isStamps ? site.program?.spend_per_stamp : null;
   const input =
     "w-full rounded-brand border border-brand-muted/30 bg-brand-surface px-4 py-3 font-mono uppercase tracking-widest outline-none focus:border-brand";
 
@@ -48,15 +50,29 @@ async function Staff({ params, searchParams }: Pick<PageProps<"/[tenant]/caja">,
       </div>
 
       <section className="rounded-brand bg-brand-surface p-5 shadow-sm">
-        <h2 className="mb-3 font-semibold">{isStamps ? "Sumar sello" : "Sumar puntos"}</h2>
+        <h2 className="mb-3 font-semibold">{isStamps ? "Sumar sellos" : "Sumar puntos"}</h2>
         <ActionForm action={addLoyalty.bind(null, site.slug)}>
           <input name="code" defaultValue={code} required placeholder="CÓDIGO" className={input} />
-          {isStamps ? (
+          {spendPerStamp ? (
+            <>
+              <input
+                name="purchase"
+                type="number"
+                min={0}
+                step="0.01"
+                inputMode="decimal"
+                required
+                placeholder="Monto de la compra ($)"
+                className={input.replace("font-mono uppercase tracking-widest", "")}
+              />
+              <p className="text-xs text-brand-muted">1 sello por cada {formatPrice(spendPerStamp)} de compra.</p>
+            </>
+          ) : isStamps ? (
             <input type="hidden" name="amount" value="1" />
           ) : (
             <input name="amount" type="number" min={1} required placeholder="Puntos" className={input} />
           )}
-          <Button type="submit">{isStamps ? "+1 sello" : "Sumar"}</Button>
+          <Button type="submit">{spendPerStamp ? "Sumar sellos" : isStamps ? "+1 sello" : "Sumar"}</Button>
         </ActionForm>
       </section>
 

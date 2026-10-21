@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { refresh } from "next/cache";
 import { requestOrigin } from "@/lib/origin";
 import { createClient } from "@/lib/supabase/server";
+import { formatPrice, pluralize } from "@/lib/format";
 import { isOrderStatus } from "@/lib/tenant/orders";
 import { getTenantSite } from "@/lib/tenant/queries";
 
@@ -58,17 +59,35 @@ const RPC_ERRORS: Record<string, string> = {
 export async function addLoyalty(slug: string, _prev: FormState, formData: FormData): Promise<FormState> {
   const site = await requireTenant(slug);
   const code = String(formData.get("code") ?? "");
-  const amount = Number(formData.get("amount") ?? 1);
+  let amount = Number(formData.get("amount") ?? 1);
+  let note: string | undefined;
+
+  // Sellos por monto: 1 sello por cada spend_per_stamp de compra
+  const spendPerStamp = site.program?.type === "stamps" ? site.program.spend_per_stamp : null;
+  if (spendPerStamp) {
+    const purchase = Number(formData.get("purchase") ?? 0);
+    amount = Math.floor(purchase / spendPerStamp);
+    if (!(amount > 0)) {
+      return {
+        ok: false,
+        message: `La compra no alcanza para un sello (es 1 por cada ${formatPrice(spendPerStamp)}).`,
+      };
+    }
+    note = `Compra de ${formatPrice(purchase)}`;
+  }
 
   const supabase = await createClient();
   const { data, error } = await supabase.rpc("add_loyalty", {
     p_tenant_id: site.id,
     p_customer_code: code,
     p_amount: amount,
+    p_note: note,
   });
   if (error) return { ok: false, message: RPC_ERRORS[error.code] ?? "No se pudo registrar." };
   refresh();
-  return { ok: true, message: `Listo. ${code.toUpperCase()} ahora tiene ${data}.` };
+  const added = spendPerStamp ? `Se ${amount === 1 ? "sumó 1 sello" : `sumaron ${amount} sellos`}. ` : "";
+  const unit = site.program?.type === "points" ? (["punto", "puntos"] as const) : (["sello", "sellos"] as const);
+  return { ok: true, message: `Listo. ${added}${code.toUpperCase()} ahora tiene ${pluralize(data, ...unit)}.` };
 }
 
 export async function redeemReward(slug: string, _prev: FormState, formData: FormData): Promise<FormState> {

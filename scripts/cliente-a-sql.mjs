@@ -61,12 +61,21 @@ on conflict (slug) do update set name = excluded.name, tagline = excluded.taglin
 ];
 
 if (client.program) {
-  const p = client.program;
+  const p = { type: "stamps", stamps_required: 5, points_per_currency: 1, stamp_icon: "star", ...client.program };
+  const columns = [
+    "type",
+    "name",
+    "description",
+    "stamps_required",
+    "points_per_currency",
+    "spend_per_stamp",
+    "terms",
+    "stamp_icon",
+  ];
   sql.push(`
-insert into public.loyalty_programs (tenant_id, type, name, description, stamps_required, points_per_currency, stamp_icon)
-values (${tenant}, ${[p.type ?? "stamps", p.name, p.description, p.stamps_required ?? 5, p.points_per_currency ?? 1, p.stamp_icon ?? "star"].map(lit).join(", ")})
-on conflict (tenant_id) do update set type = excluded.type, name = excluded.name, description = excluded.description,
-  stamps_required = excluded.stamps_required, points_per_currency = excluded.points_per_currency, stamp_icon = excluded.stamp_icon;`);
+insert into public.loyalty_programs (tenant_id, ${columns.join(", ")})
+values (${tenant}, ${columns.map((c) => lit(p[c])).join(", ")})
+on conflict (tenant_id) do update set ${columns.map((c) => `${c} = excluded.${c}`).join(", ")};`);
 }
 
 sql.push(`\nupdate public.rewards set active = false where tenant_id = ${tenant};`);

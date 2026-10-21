@@ -27,14 +27,21 @@
   "program": {
     "type": "stamps",
     "name": "Club Dolce Vita",
-    "description": "Junta 8 sellos y llévate una cookie gratis.",
+    "description": "Gana 1 sello por cada $150 de compra. Con 4 sellos, 10% de descuento; con 8, una galleta gratis.",
     "stamps_required": 8,
-    "stamp_icon": "cookie"
+    "spend_per_stamp": 150,
+    "stamp_icon": "cookie",
+    "terms": "• Recibes 1 sello digital por cada $150 MXN de compra.\n• Con 4 sellos obtienes 10% de descuento en tu siguiente compra.\n• Con 8 sellos eliges 1 galleta gratis entre los sabores clásicos y especiales disponibles en el menú. Las galletas premium, como Kinder Bueno y Capricho de Cajeta, quedan excluidas.\n• Las recompensas no se pueden combinar con otras promociones."
   },
   "rewards": [
     {
-      "name": "Cookie gratis",
-      "description": "La New York Cookie clásica que tú elijas.",
+      "name": "10% de descuento",
+      "description": "En tu siguiente compra.",
+      "cost": 4
+    },
+    {
+      "name": "Galleta gratis",
+      "description": "Un sabor clásico o especial a tu elección. No incluye galletas premium.",
       "cost": 8
     }
   ],

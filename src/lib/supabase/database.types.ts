@@ -103,14 +103,14 @@ isOneToOne: false
                   ]
                 },"loyalty_programs": {
                   Row: {
-                    "description": string | null,"id": string,"name": string,"points_per_currency": number,"stamp_icon": string,"stamps_required": number,"tenant_id": string,"type": string
+                    "description": string | null,"id": string,"name": string,"points_per_currency": number,"spend_per_stamp": number | null,"stamp_icon": string,"stamps_required": number,"tenant_id": string,"terms": string | null,"type": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "description"?: string | null,"id"?: string,"name"?: string,"points_per_currency"?: number,"stamp_icon"?: string,"stamps_required"?: number,"tenant_id": string,"type"?: string
+                    "description"?: string | null,"id"?: string,"name"?: string,"points_per_currency"?: number,"spend_per_stamp"?: number | null,"stamp_icon"?: string,"stamps_required"?: number,"tenant_id": string,"terms"?: string | null,"type"?: string
                   }
                   Update: {
-                    "description"?: string | null,"id"?: string,"name"?: string,"points_per_currency"?: number,"stamp_icon"?: string,"stamps_required"?: number,"tenant_id"?: string,"type"?: string
+                    "description"?: string | null,"id"?: string,"name"?: string,"points_per_currency"?: number,"spend_per_stamp"?: number | null,"stamp_icon"?: string,"stamps_required"?: number,"tenant_id"?: string,"terms"?: string | null,"type"?: string
                   }
                   Relationships: [
                     {

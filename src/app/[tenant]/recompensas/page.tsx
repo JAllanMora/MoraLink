@@ -24,6 +24,7 @@ async function Rewards({ params }: { params: PageProps<"/[tenant]/recompensas">[
       <Suspense fallback={<RewardList site={site} balance={null} />}>
         <RewardListWithBalance site={site} />
       </Suspense>
+      {site.program?.terms && <p className="whitespace-pre-line text-sm text-brand-muted">{site.program.terms}</p>}
     </div>
   );
 }
