@@ -86,8 +86,8 @@ export async function addLoyalty(slug: string, _prev: FormState, formData: FormD
   if (error) return { ok: false, message: RPC_ERRORS[error.code] ?? "No se pudo registrar." };
   refresh();
   const added = spendPerStamp ? `Se ${amount === 1 ? "sumó 1 sello" : `sumaron ${amount} sellos`}. ` : "";
-  const unit = site.program?.type === "points" ? (["punto", "puntos"] as const) : (["sello", "sellos"] as const);
-  return { ok: true, message: `Listo. ${added}${code.toUpperCase()} ahora tiene ${pluralize(data, ...unit)}.` };
+  const [one, many] = site.program?.type === "points" ? ["punto", "puntos"] : ["sello", "sellos"];
+  return { ok: true, message: `Listo. ${added}${code.toUpperCase()} ahora tiene ${pluralize(data, one, many)}.` };
 }
 
 export async function redeemReward(slug: string, _prev: FormState, formData: FormData): Promise<FormState> {
